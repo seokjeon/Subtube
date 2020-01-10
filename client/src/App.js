@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
-import Customer from './components/Customer'
-import Paper from '@material-ui/core/Paper'
-
-import Table from '@material-ui/core/Table'
-import TableRow from '@material-ui/core/TableRow'
-import TableHead from '@material-ui/core/TableHead'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
 import {withStyles} from '@material-ui/core/styles'
-
+import {Home, MyPage, Translate} from './pages'
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+import './App.css';
 
 const styles = theme =>({
   root : {
@@ -24,17 +17,29 @@ const styles = theme =>({
 
 class App extends Component {
   state = {
-      customers : ""
+      subs : ""
   }
   componentDidMount(){
-    this.callApi().then(res => this.setState({customers : res}))
+    this.callApi().then(res => this.setState({subs : res}))
   }
 
   callApi = async ()=>{
-    const response = await fetch('/api/customers')
+    const response = await fetch('/api/subs')
     const body = await response.json()
     return body
   }
+
+  render(){
+    return(
+      <Router>
+        <Route exact path ="/" component = {Home}/>
+        <Route path ="/MyPage" component = {MyPage}/>
+        <Route path ="/Translate" component = {Translate}/>
+      </Router>
+    )
+    
+  }
+  /*
   render(){
     const {classes} = this.props;
     
@@ -45,16 +50,12 @@ class App extends Component {
           <Table className = {classes.table}>
             <TableHead>
               <TableRow>
-                <TableCell>번호</TableCell>
-                <TableCell>이미지</TableCell>
-                <TableCell>이름</TableCell>
-                <TableCell>생일</TableCell>
-                <TableCell>성별</TableCell>
+                <TableCell>자막</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.state.customers ? this.state.customers.map(c => {return (            
-                  <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender}/>
+              {this.state.subs ? this.state.subs.map(c => {return (            
+                  <Subs key={c.id} subs={c.subs}/>
               )}) : ""}
             </TableBody>
           </Table>
@@ -64,7 +65,9 @@ class App extends Component {
       </div>
   
     );
+
   }
+   */
  
 }
 
