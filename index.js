@@ -4,13 +4,14 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const app = express();
 const port = process.env.PORT;
 // const port = 5003;
 
 // Static File Service
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, './client/', 'public/')));
 // Body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

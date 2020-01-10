@@ -1,44 +1,79 @@
 import React, { Component } from 'react';
-import {withStyles} from '@material-ui/core/styles'
-import {Home, MyPage, Translate} from './pages'
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import logo from './logo.svg';
 import './App.css';
 
-const styles = theme =>({
-  root : {
-    width : '100%',
-    marginTop : theme.spacing.unit * 3,
-    overflowX : "auto"
-  },
-  table:{
-    minWidth : 1080
-  }
-})
-
 class App extends Component {
-  state = {
-      subs : ""
-  }
-  componentDidMount(){
-    this.callApi().then(res => this.setState({subs : res}))
-  }
 
-  callApi = async ()=>{
-    const response = await fetch('/')
-    const body = await response.json()
-    return body
-  }
+    state = { username: null };
 
-  render(){
-    return(
-      <Router>
-        <Route exact path ="/" component = {Home}/>
-        <Route path ="/MyPage" component = {MyPage}/>
-        <Route path ="/Translate" component = {Translate}/>
-      </Router>
-    )
+    componentDidMount() {
+        fetch('/api/getUsername')
+            .then(res => res.json())
+            .then(user => this.setState({ username: user.username }));
+    }
+
+  render() {
+    const { username } = this.state;
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1 className="App-title">Welcome to React</h1>
+        </header>
+        <p className="App-intro">
+          To get started, edit <code>src/App.js</code> and save to reload.
+        </p>
+          <div>
+              {username ? <h1>{`Hello ${username}`}</h1> : <h1>Loading.. please wait!</h1>}
+          </div>
+      </div>
+    );
+  }
+}
+
+export default App;
+
+// import React, { Component } from 'react';
+// import {withStyles} from '@material-ui/core/styles'
+// import {Home, MyPage, Translate} from './pages'
+// import {BrowserRouter as Router, Route} from 'react-router-dom';
+// import './App.css';
+
+// const styles = theme =>({
+//   root : {
+//     width : '100%',
+//     marginTop : theme.spacing.unit * 3,
+//     overflowX : "auto"
+//   },
+//   table:{
+//     minWidth : 1080
+//   }
+// })
+
+// class App extends Component {
+//   state = {
+//       subs : ""
+//   }
+//   componentDidMount(){
+//     this.callApi().then(res => this.setState({subs : res}))
+//   }
+
+//   callApi = async ()=>{
+//     const response = await fetch('/')
+//     const body = await response.json()
+//     return body
+//   }
+
+//   render(){
+//     return(
+//       <Router>
+//         <Route exact path ="/" component = {Home}/>
+//         <Route path ="/MyPage" component = {MyPage}/>
+//         <Route path ="/Translate" component = {Translate}/>
+//       </Router>
+//     )
     
-  }
+//   }
   /*
   render(){
     const {classes} = this.props;
@@ -71,4 +106,4 @@ class App extends Component {
  
 }
 
-export default withStyles(styles)(App);
+// export default withStyles(styles)(App);
