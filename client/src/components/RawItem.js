@@ -1,43 +1,50 @@
 import React, { Component } from 'react'
-import { Typography, Table, TableRow, TableHead, TableBody, TableCell, Button } from '@material-ui/core'
+import { Typography, TableRow, TableCell } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 const styles = theme => ({
-    
+
 })
 
 class RawItem extends Component {
     
-    constructor(){
-        super()
-        this.state = {
-            color : '',
-            clicked : 0
+    state = {
+        isActive : null
+    }
+
+    handleClick = (rowInfo)=>{
+        if(rowInfo === this.state.isActive){
+            this.setState({
+                isActive : null
+            })
+            return
         }
-    }
-    handleClick = ()=>{
         this.setState({
-            color : 'green',
-            clicked : 1
+            isActive : rowInfo
         })
-        console.log(this.state.color)
+
     }
+
     render() {
         const {classes} = this.props
         return (
             <div>
-                <TableRow>
-                    <TableCell bgColor ={this.state.color} onClick={this.handleClick}>
-                    <div><Typography variant='caption'>00:03:00~00:03:05</Typography></div>
-                            <Typography variant='h6'>Hello</Typography>
-                             <div><div>
-                                <Typography variant='caption'>번역수 </Typography>
-                                <Typography variant='caption'>추천수</Typography></div>
-                            </div>
-                   </TableCell>
+                <TableRow onClick={this.handleClick} bgColor = {this.state.isActive === null ? 'red' : 'green'}>
+                    <TableCell>
+                        <div><Typography variant='caption'>00:03:00~00:03:05</Typography></div>
+                        <Typography variant='h6'>Hello</Typography>
+                        <div><div>
+                            <Typography variant='caption'>번역수 </Typography>
+                            <Typography variant='caption'>추천수</Typography></div>
+                        </div>
+                    </TableCell>
+
                 </TableRow>
             </div>
         )
+        
+
     }
+    
 
 }
 

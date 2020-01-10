@@ -60,6 +60,7 @@ const styles = theme => ({
 class Translate extends Component {
 
     render() {
+        
         const { classes } = this.props;
         return (
             <div>
@@ -73,7 +74,7 @@ class Translate extends Component {
                         <div className={classes.TransBlock}><TransBlock/></div>
                         <div className={classes.OtherSub}>
                             <Table className={classes.root}><TableBody>
-                            <OtherSubBlock/><OtherSubBlock/><OtherSubBlock/>
+                                    <OtherSubBlock/>
                                 </TableBody>
                             </Table>
                         </div>

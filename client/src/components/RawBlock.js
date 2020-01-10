@@ -4,19 +4,20 @@ import RawItem from '../components/RawItem'
 
 class RawBlock extends Component{
     render(){
-        return(
-            <div>
+        const tableData = [1, 2, 3]
+        return tableData.map((data, index)=>{
+            return (
+                <div>
                 <Paper>
                     <Table>
                       <TableBody>
-                      <RawItem/><RawItem/>
-                      <RawItem/>
-                      <RawItem/>
+                      <RawItem row={index}  bgColor = {this.state.isActive === null ? 'red' : 'green'}/>
                       </TableBody>
                     </Table>
                 </Paper>
             </div>
-        )
+            )
+        })
     }
 
 }
