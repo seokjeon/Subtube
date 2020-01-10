@@ -41,7 +41,6 @@ class TransBlock extends Component {
                 <TextField multiline variant = "outlined" className = {classes.text}></TextField>
                 <div className={classes.votesText}><Typography variant= 'caption'>추천수</Typography></div>
             </div>
-
         )
     }
 }

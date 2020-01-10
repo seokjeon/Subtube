@@ -8,7 +8,6 @@ import './Home.css'
 class Home extends Component {
 
     render() {
-        //const {classes} = this.props;
         return (            
             <div>
                 <NavBar></NavBar>
