@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Paper, Table, TableRow, TableHead, TableBody, TableCell} from '@material-ui/core'
-import Subs from './Subs'
+import Subs from '../components/Subs'
 
 
 class RawBlock extends Component{

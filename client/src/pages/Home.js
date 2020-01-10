@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import NavBar from '../components/NavBar'
-import {withStyles} from '@material-ui/core/styles'
+//import {withStyles} from '@material-ui/core/styles'
 import {Button} from '@material-ui/core'
 import {Link} from 'react-router-dom'
 import './Home.css'
@@ -8,7 +8,7 @@ import './Home.css'
 class Home extends Component {
 
     render() {
-
+        //const {classes} = this.props;
         return (            
             <div>
                 <NavBar></NavBar>
