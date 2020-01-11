@@ -84,9 +84,7 @@ class Translate extends Component {
     fetchVideoURL = (url) => {
         return fetch('http://75ab28e8.ngrok.io/Trans/' + url)
     }
-    _seekTo(event, start_time, duration, allowSeekAhead){
-        event.target.seekTo(start_time, allowSeekAhead)
-    }
+ 
 
     render() {
         const { classes } = this.props;
