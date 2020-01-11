@@ -10,17 +10,17 @@ class RawBlock extends Component {
         this.setState({ selected: childData })
     }
 
-
     render() {
-        const tableData = [1, 2, 3]
-        return tableData.map((data, index) => {
+        const tableData = this.props.data
+        console.log(tableData)
+        return tableData.map((elem, index) => {
             return (
                 <div>
                     <Paper>
                         <Table>
                             <TableBody>
                                 <TableRow bgcolor={this.state.selected == index ? 'red' : null}>
-                                    <RawItem parentCallback={this.callbackFunc} row={index}/>
+                                    <RawItem parentCallback={this.callbackFunc} row={index} data={elem}/>
                                 </TableRow>
 
                             </TableBody>

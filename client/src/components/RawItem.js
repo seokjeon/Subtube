@@ -14,14 +14,15 @@ class RawItem extends Component {
     }
 
     render() {
-
         const {classes} = this.props
+        console.log(this.props.data)
+
         return (
             <div>
 
                 <TableCell className = {classes.cell} onClick={this.sendSelectedRow}>
                     <div><Typography variant='caption'>00:03:00~00:03:05</Typography></div>
-                    <Typography variant='h6'>Hello</Typography>
+                    <Typography variant='h6'>{this.props.data.text}</Typography>
                     <div><div>
                         <Typography variant='caption'>번역수 </Typography>
                         <Typography variant='caption'>추천수</Typography></div>

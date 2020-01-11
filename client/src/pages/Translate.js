@@ -27,7 +27,7 @@ const styles = theme => ({
         minHeight: '35vh',
         marginTop: '20px',
     },
-    
+
     TransBlock: {
         width: '100%',
         overflow: 'auto',
@@ -41,12 +41,12 @@ const styles = theme => ({
         minHeight: '30vh',
         marginTop: '20px',
         overflowY: 'scroll',
-        
+
     }, root: {
         width: '100%',
         overflowX: "auto"
     },
-    RawBlock : {
+    RawBlock: {
         maxHeight: "50vh",
         width: '100%',
         overflow: 'hidden',
@@ -57,22 +57,37 @@ const styles = theme => ({
 
 })
 
-class Translate extends Component {
-
-    fetchVideoURL = async(url) =>{
-        return await fetch('http://75ab28e8.ngrok.io/Trans/'+ url)
+class Translate extends Component {    
+    state = {
+        data: new Array
     }
 
-    componentDidMount(){
-        console.log(this.props.match.params.url)
+    constructor(props){
+        super(props)
+        
+        let subtitles = new Array
+
         this.fetchVideoURL(this.props.match.params.url)
-        .then(res=>res.json())
-        .then(data=>console.log(data))
-        .catch(err=>console.log(err))
+            .then(res => res.json())
+            .then(
+                data => {
+                    if (data) {
+                        data.forEach(sub => {
+                            subtitles.push(sub)
+                        })
+                    }
+                }
+            )
+            .then(() => (this.setState({ data: subtitles })))
+            .catch(err => console.error(err))
+
+    }
+    fetchVideoURL = (url) => {
+        return fetch('http://75ab28e8.ngrok.io/Trans/' + url)
     }
 
     render() {
-        
+
         const { classes } = this.props;
         return (
             <div>
@@ -80,14 +95,14 @@ class Translate extends Component {
                 <div>
                     <div className={classes.left}>
                         <div className={classes.TransBlock}>video</div>
-                        <div className={classes.RawBlock}><RawBlock/></div>
+                        <div className={classes.RawBlock}><RawBlock data={this.state.data} /></div>
                     </div>
                     <div className={classes.right}>
-                        <div className={classes.TransBlock}><TransBlock/></div>
+                        <div className={classes.TransBlock}><TransBlock /></div>
                         <div className={classes.OtherSub}>
                             <Table className={classes.root}><TableBody>
-                                    <OtherSubBlock/>
-                                </TableBody>
+                                <OtherSubBlock />
+                            </TableBody>
                             </Table>
                         </div>
                     </div>

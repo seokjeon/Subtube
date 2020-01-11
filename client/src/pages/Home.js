@@ -5,8 +5,7 @@ import './Home.css'
 
 class Home extends Component {
 
-
-    redirectPage1 = ()=>{
+    redirectPage = ()=>{
         let url = document.getElementById("url").value
         if(url) return this.props.history.push(`/Trans/` + document.getElementById("url").value)
     }
@@ -18,7 +17,7 @@ class Home extends Component {
                 <div className='horizontal'>
                     <input id="url" type="text" className='input' placeholder="URL을 입력 해 주세요"></input>
                     
-                    <Button className='btn' variant="contained" color="primary" onClick={this.parseURL}>
+                    <Button className='btn' variant="contained" color="primary" onClick={this.redirectPage}>
                         TRANSLATE
                     </Button>
 
