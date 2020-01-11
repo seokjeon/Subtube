@@ -5,6 +5,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+var db =  mongoose.connection
+db.on('error', console.error)
+db.once('open', function(){
+  console.log("Connected to mongod server")
+})
+
+
+
 const app = express();
 const port = process.env.PORT;
 
@@ -25,6 +33,9 @@ mongoose.connect(process.env.MONGO_URI)
 
 // URL routing
 app.use('/', require('./routes/base.js'));
+
+
+
 
 console.log(port)
 app.listen(port, () => console.log(`Server listening on port ${port}`));
