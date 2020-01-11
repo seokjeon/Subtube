@@ -8,7 +8,6 @@ const styles = theme => ({
 })
 
 class RawItem extends Component {
-
     
     sendSelectedRow = () => {
         this.props.parentCallback(this.props.row)
