@@ -1,9 +1,18 @@
 import React, { Component } from 'react'
-import { Paper, Table, TableRow, TableHead, TableBody, TableCell } from '@material-ui/core'
+import { Paper, Table, TableRow, TableHead, TableBody, TableCell, withStyles } from '@material-ui/core'
 import RawItem from '../components/RawItem'
+
+
+
+const styles = theme => ({
+    cell : {
+        width : "100%"
+    }
+})
 
 class RawBlock extends Component {
 
+    
     state = { selected: null }
 
     callbackFunc = (childData) => {
@@ -11,15 +20,15 @@ class RawBlock extends Component {
     }
 
     render() {
+        const {classes} = this.props
         const tableData = this.props.data
-        console.log(tableData)
         return tableData.map((elem, index) => {
             return (
                 <div>
                     <Paper>
                         <Table>
                             <TableBody>
-                                <TableRow bgcolor={this.state.selected == index ? {color : `rgb(230, 0, 0)`} : null}>
+                                <TableRow className={classes.cell} bgcolor={this.state.selected == index ? {color : `rgb(0, 40, 180)`} : null}>
                                     <RawItem parentCallback={this.callbackFunc} row={index} data={elem}/>
                                 </TableRow>
 
@@ -33,4 +42,4 @@ class RawBlock extends Component {
 
 }
 
-export default RawBlock
+export default withStyles(styles)(RawBlock)
