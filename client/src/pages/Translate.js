@@ -5,7 +5,7 @@ import OtherSubBlock from '../components/OtherSubBlock'
 import NavBar from '../components/NavBar'
 import { withStyles } from '@material-ui/core/styles'
 import { Table, TableBody } from '@material-ui/core'
-
+import YouTube from 'react-youtube'
 const styles = theme => ({
     left: {
         width: '45%',
@@ -53,7 +53,8 @@ const styles = theme => ({
         minHeight: '30vh',
         marginTop: '20px',
         overflowY: 'scroll',
-    }
+    },
+    
 
 })
 
@@ -66,7 +67,6 @@ class Translate extends Component {
         super(props)
         
         let subtitles = new Array
-
         this.fetchVideoURL(this.props.match.params.url)
             .then(res => res.json())
             .then(
@@ -80,21 +80,22 @@ class Translate extends Component {
             )
             .then(() => (this.setState({ data: subtitles })))
             .catch(err => console.error(err))
-
     }
     fetchVideoURL = (url) => {
         return fetch('http://75ab28e8.ngrok.io/Trans/' + url)
     }
+    _seekTo(event, start_time, duration, allowSeekAhead){
+        event.target.seekTo(start_time, allowSeekAhead)
+    }
 
     render() {
-
         const { classes } = this.props;
         return (
             <div>
                 <NavBar></NavBar>
                 <div>
                     <div className={classes.left}>
-                        <div className={classes.TransBlock}>video</div>
+                        <div><YouTube _seekTo={this._seekTo} videoId={this.props.match.params.url} seekTo={this._seekTo}/></div>
                         <div className={classes.RawBlock}><RawBlock data={this.state.data} /></div>
                     </div>
                     <div className={classes.right}>

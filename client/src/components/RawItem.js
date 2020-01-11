@@ -11,6 +11,7 @@ class RawItem extends Component {
     
     sendSelectedRow = () => {
         this.props.parentCallback(this.props.row)
+        this.props.parentToSeek(this.props.data.start, this.props.data.duration)
     }
 
     render() {
