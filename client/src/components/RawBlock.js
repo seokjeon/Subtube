@@ -19,7 +19,7 @@ class RawBlock extends Component {
                     <Paper>
                         <Table>
                             <TableBody>
-                                <TableRow bgcolor={this.state.selected == index ? 'red' : null}>
+                                <TableRow bgcolor={this.state.selected == index ? {color : `rgb(230, 0, 0)`} : null}>
                                     <RawItem parentCallback={this.callbackFunc} row={index} data={elem}/>
                                 </TableRow>
 
