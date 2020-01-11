@@ -4,7 +4,7 @@ import TransBlock from '../components/TransBlock'
 import OtherSubBlock from '../components/OtherSubBlock'
 import NavBar from '../components/NavBar'
 import { withStyles } from '@material-ui/core/styles'
-import { Table, TableHead, TableCell, TableBody } from '@material-ui/core'
+import { Table, TableBody } from '@material-ui/core'
 
 const styles = theme => ({
     left: {
@@ -58,6 +58,18 @@ const styles = theme => ({
 })
 
 class Translate extends Component {
+
+    fetchVideoURL = async(url) =>{
+        return await fetch('http://75ab28e8.ngrok.io/Trans/'+ url)
+    }
+
+    componentDidMount(){
+        console.log(this.props.match.params.url)
+        this.fetchVideoURL(this.props.match.params.url)
+        .then(res=>res.json())
+        .then(data=>console.log(data))
+        .catch(err=>console.log(err))
+    }
 
     render() {
         

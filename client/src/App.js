@@ -4,6 +4,7 @@ import {Home, MyPage, Translate} from './pages'
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import './App.css';
 
+
 const styles = theme =>({
   root : {
     width : '100%',
@@ -32,9 +33,10 @@ class App extends Component {
   render(){
     return(
       <Router>
-        <Route exact path ="/subtube" component = {Home}/>
+        <Route exact path ="/" component = {Home}/>
+        <Route path ="/Trans/:url" component ={Translate}/>
         <Route path ="/mypage" component = {MyPage}/>
-        <Route path ="/translate" component = {Translate}/>
+        <Route exact path ="/Trans" component = {Translate}/>
       </Router>
     )
     
