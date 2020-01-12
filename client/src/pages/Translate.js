@@ -59,13 +59,13 @@ const styles = theme => ({
 })
 
 class Translate extends Component {    
+    
     state = {
         data: new Array,
         yt : null,
         startTime : 0,
-        duration : null
+        duration : null,
     }
-
 
     constructor(props){
         super(props)
@@ -103,28 +103,13 @@ class Translate extends Component {
         this.setState({
             startTime : getStartTime,
             duration : durationTime
-        })
-        console.log("in")
-        this.state.yt.seekTo(this.state.startTime, true)
-        this.state.yt.pauseVideo()
-        // this.state.yt.playVideo()
+        }, ()=>this.clicked())
     }
 
     clicked = ()=>{
-        console.log(this.state.startTime + "/")
         this.state.yt.seekTo(this.state.startTime, true)
-        this.state.yt.pauseVideo()
-    }
-
-    loopVideo =(player)=>{
-        if(player.data === 1){
-            //TODO : change it to duration
-            setTimeout(this.clicked, 2000)
-            return
-        }else{
-            console.log(player.data)
-            return
-        }
+        this.state.yt.playVideo()
+        setTimeout(()=>this.state.yt.pauseVideo(), 2000)
     }
 
     render() {
