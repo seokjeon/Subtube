@@ -109,6 +109,7 @@ class Translate extends Component {
     clicked = ()=>{
         this.state.yt.seekTo(this.state.startTime, true)
         this.state.yt.playVideo()
+        //TODO : change timeout 2000 to duration
         setTimeout(()=>this.state.yt.pauseVideo(), 2000)
     }
 
