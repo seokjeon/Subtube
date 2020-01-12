@@ -6,6 +6,12 @@ const SentenceBlock = require('../models/SentenceBlock')
 
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
 
+router.get('/', function(req, res){
+  console.log("hi I'm node js server")
+  res.send("HI CLIENT I'M NODE JS")
+})
+
+
 router.get('/trans/:id', function(req, res){
   videoId = req.params.id
   url = 'http://c1235100.ngrok.io/Trans/' + videoId

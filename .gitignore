@@ -44,6 +44,8 @@ build/Release
 
 # Dependency directories
 node_modules/
+/.pnp
+.pnp.js
 jspm_packages/
 
 # TypeScript v1 declaration files
@@ -105,6 +107,12 @@ dist/
 # Temporary folders
 tmp/
 temp/
+
+# testing
+/coverage
+
+# production
+/build
 
 ### react ###
 .DS_*
