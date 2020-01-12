@@ -10,25 +10,23 @@ const styles = theme => ({
 class RawItem extends Component {
     
     sendSelectedRow = () => {
-        this.props.parentCallback(this.props.row, this.props.data.start)
+        this.props.parentCallback(this.props.row, this.props.data.start, this.props.data.duration)
     }
 
     render() {
         const {classes} = this.props
         const sub = this.props.data
-
         return (
             <div>
                 <TableCell className = {classes.cell} onClick={this.sendSelectedRow}>
-                    <div><Typography variant='caption'>{sub.start} ~ {sub.start + sub.duration}</Typography></div>
+                    <div><Typography variant='caption'>{sub.start}</Typography></div>
                     <Typography variant='h6'>{sub.text}</Typography>
                     <div><div>
                         <Typography variant='caption'>번역수 </Typography>
                         <Typography variant='caption'>추천수</Typography></div>
                     </div>
                 </TableCell>
-
-
+            
             </div>
         )
 

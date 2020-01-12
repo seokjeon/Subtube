@@ -58,17 +58,17 @@ const styles = theme => ({
 
 })
 
-
 class Translate extends Component {    
     state = {
         data: new Array,
-        yt : null
+        yt : null,
+        startTime : 0,
+        duration : null
     }
 
 
     constructor(props){
         super(props)
-
         
         let subtitles = new Array
         this.fetchVideoURL(this.props.match.params.url)
@@ -87,10 +87,9 @@ class Translate extends Component {
     }
 
     fetchVideoURL = (url) => {
-        return fetch('http://5373bf32.ngrok.io/Trans/' + url)
+        return fetch('http://c1235100.ngrok.io/Trans/' + url)
     }
 
-    
     onPlayerReady = (player) =>{
         player.target.playVideo()
         
@@ -100,23 +99,45 @@ class Translate extends Component {
         
     }
 
-    callBackFunction = (getStartTime)=>{
-
-        this.state.yt.seekTo(getStartTime, true)
+    seekClickedBlock = (getStartTime, durationTime)=>{
+        this.setState({
+            startTime : getStartTime,
+            duration : durationTime
+        })
+        console.log("in")
+        this.state.yt.seekTo(this.state.startTime, true)
         this.state.yt.pauseVideo()
-        this.state.yt.playVideo()
+        // this.state.yt.playVideo()
+    }
 
+    clicked = ()=>{
+        console.log(this.state.startTime + "/")
+        this.state.yt.seekTo(this.state.startTime, true)
+        this.state.yt.pauseVideo()
+    }
+
+    loopVideo =(player)=>{
+        if(player.data === 1){
+            //TODO : change it to duration
+            setTimeout(this.clicked, 2000)
+            return
+        }else{
+            console.log(player.data)
+            return
+        }
     }
 
     render() {
         const { classes } = this.props;
+
         return (
             <div>
                 <NavBar></NavBar>
                 <div>
                     <div className={classes.left}>
-                        <div><YouTube videoId={this.props.match.params.url} onReady ={this.onPlayerReady}/></div>
-                        <div className={classes.RawBlock}><RawBlock data={this.state.data} transCallBack={this.callBackFunction}/>
+                        <div><YouTube onStateChange={this.loopVideo} videoId={this.props.match.params.url} onReady ={this.onPlayerReady}/></div>
+                        <p>{this.state.duration}</p>
+                        <div className={classes.RawBlock}><RawBlock data={this.state.data} transCallBack={this.seekClickedBlock}/>
                         </div>
                     </div>
                     <div className={classes.right}>

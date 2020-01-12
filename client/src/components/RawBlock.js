@@ -13,11 +13,12 @@ class RawBlock extends Component {
         selected: null
     }
     
-    callbackFunc = (childData, startTime) => {
+    callbackFunc = (childData, startTime, durationTime) => {
         this.setState({ 
             selected: childData,
         })
-        this.props.transCallBack(startTime)
+        
+        this.props.transCallBack(startTime, durationTime)
     }
 
     render() {
