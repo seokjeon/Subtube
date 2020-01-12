@@ -58,12 +58,11 @@ const styles = theme => ({
 
 })
 
-let youtube
 
 class Translate extends Component {    
     state = {
         data: new Array,
-        startTime : 0,
+        yt : null
     }
 
 
@@ -91,23 +90,22 @@ class Translate extends Component {
         return fetch('http://5373bf32.ngrok.io/Trans/' + url)
     }
 
-
-    
-    callBackFunction = (getStartTime)=>{
-        this.setState({
-            startTime : getStartTime
-        })       
-    }
-
-    _seekTo = (player)=>{
-        player.target.seekTo(this.state.startTime, false)
-    }
-
     
     onPlayerReady = (player) =>{
-        console.log(document.getElementById("player"))        
-
         player.target.playVideo()
+        
+        this.setState({
+            yt : player.target
+        })
+        
+    }
+
+    callBackFunction = (getStartTime)=>{
+
+        this.state.yt.seekTo(getStartTime, true)
+        this.state.yt.pauseVideo()
+        this.state.yt.playVideo()
+
     }
 
     render() {
@@ -117,8 +115,7 @@ class Translate extends Component {
                 <NavBar></NavBar>
                 <div>
                     <div className={classes.left}>
-                        <div><YouTube id = "player" videoId={this.props.match.params.url} onStateChange={this._seekTo} onReady ={this.onPlayerReady}/></div>
-                        <div><p>{this.state.startTime}</p></div>
+                        <div><YouTube videoId={this.props.match.params.url} onReady ={this.onPlayerReady}/></div>
                         <div className={classes.RawBlock}><RawBlock data={this.state.data} transCallBack={this.callBackFunction}/>
                         </div>
                     </div>
