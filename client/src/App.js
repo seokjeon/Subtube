@@ -26,7 +26,7 @@ class App extends Component {
   
 
   callApi = async ()=>{
-    const response = await fetch('/')
+    const response = await fetch('http://localhost:5000/')
     console.log("HELLO")
     const body = await response.json()
     return body
