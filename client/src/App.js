@@ -23,9 +23,11 @@ class App extends Component {
   componentDidMount(){
     this.callApi().then(res => this.setState({subs : res}))
   }
+  
 
   callApi = async ()=>{
     const response = await fetch('/')
+    console.log("HELLO")
     const body = await response.json()
     return body
   }
