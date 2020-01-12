@@ -26,13 +26,14 @@ const styles = theme => ({
         overflow: 'auto',
         minHeight: '35vh',
         marginTop: '20px',
+        display : 'inline-block'
     },
 
     TransBlock: {
         width: '100%',
         overflow: 'auto',
         minHeight: '30vh',
-        marginTop: '20px',
+        marginTop: '20px'
     },
     OtherSub: {
         maxHeight: "50vh",
@@ -41,10 +42,16 @@ const styles = theme => ({
         minHeight: '30vh',
         marginTop: '20px',
         overflowY: 'scroll',
+        '&::-webkit-scrollbar' : {
+            display : 'none'
+        }
 
     }, root: {
         width: '100%',
-        overflowX: "auto"
+        overflowX: "auto",
+        '&::-webkit-scrollbar' : {
+            display : 'none'
+        }
     },
     RawBlock: {
         maxHeight: "50vh",
@@ -53,6 +60,9 @@ const styles = theme => ({
         minHeight: '30vh',
         marginTop: '20px',
         overflowY: 'scroll',
+        '&::-webkit-scrollbar' : {
+            display : 'none'
+        }
     },
     
 
@@ -109,6 +119,7 @@ class Translate extends Component {
     clicked = ()=>{
         this.state.yt.seekTo(this.state.startTime, true)
         this.state.yt.playVideo()
+        //TODO : change timeout 2000 to duration
         setTimeout(()=>this.state.yt.pauseVideo(), 2000)
     }
 
@@ -120,7 +131,7 @@ class Translate extends Component {
                 <NavBar></NavBar>
                 <div>
                     <div className={classes.left}>
-                        <div><YouTube onStateChange={this.loopVideo} videoId={this.props.match.params.url} onReady ={this.onPlayerReady}/></div>
+                        <div className ={classes.video}><YouTube onStateChange={this.loopVideo} videoId={this.props.match.params.url} onReady ={this.onPlayerReady}/></div>
                         <p>{this.state.duration}</p>
                         <div className={classes.RawBlock}><RawBlock data={this.state.data} transCallBack={this.seekClickedBlock}/>
                         </div>

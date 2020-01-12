@@ -8,6 +8,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import { Link, useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,6 +27,7 @@ export default function MenuAppBar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const history = useHistory()
 
   const handleChange = event => {
     setAuth(event.target.checked);
@@ -39,6 +41,9 @@ export default function MenuAppBar() {
     setAnchorEl(null);
   };
 
+  const redirectPage = ()=>{
+    history.replace("/")
+  }
   return (
     <div className={classes.root}>
       
@@ -47,9 +52,10 @@ export default function MenuAppBar() {
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" className={classes.title} onClick = {redirectPage}>
             SubTube
           </Typography>
+         
             <div>
               <IconButton
                 aria-label="account of current user"
