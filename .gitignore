@@ -44,6 +44,8 @@ build/Release
 
 # Dependency directories
 node_modules/
+/.pnp
+.pnp.js
 jspm_packages/
 
 # TypeScript v1 declaration files
@@ -68,8 +70,6 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
-.env.test
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -107,6 +107,12 @@ dist/
 # Temporary folders
 tmp/
 temp/
+
+# testing
+/coverage
+
+# production
+/build
 
 ### react ###
 .DS_*

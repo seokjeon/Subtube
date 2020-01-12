@@ -4,9 +4,19 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
+
+var db =  mongoose.connection
+db.on('error', console.error)
+db.once('open', function(){
+  console.log("Connected to mongod server")
+})
+
+
 
 const app = express();
 const port = process.env.PORT;
+// const port = 5003;
 
 // Static File Service
 app.use(express.static('public'));
@@ -25,6 +35,13 @@ mongoose.connect(process.env.MONGO_URI)
 
 // URL routing
 app.use('/', require('./routes/base.js'));
+// app.use('/', require('./client/src/index.js'));
+
+// app.use('/', express.static('client/public'));
+
+
+
+
 
 console.log(port)
 app.listen(port, () => console.log(`Server listening on port ${port}`));
