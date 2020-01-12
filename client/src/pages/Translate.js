@@ -26,6 +26,7 @@ const styles = theme => ({
         overflow: 'auto',
         minHeight: '35vh',
         marginTop: '20px',
+        display : 'inline-block'
     },
 
     TransBlock: {
@@ -130,7 +131,7 @@ class Translate extends Component {
                 <NavBar></NavBar>
                 <div>
                     <div className={classes.left}>
-                        <div><YouTube onStateChange={this.loopVideo} videoId={this.props.match.params.url} onReady ={this.onPlayerReady}/></div>
+                        <div className ={classes.video}><YouTube onStateChange={this.loopVideo} videoId={this.props.match.params.url} onReady ={this.onPlayerReady}/></div>
                         <p>{this.state.duration}</p>
                         <div className={classes.RawBlock}><RawBlock data={this.state.data} transCallBack={this.seekClickedBlock}/>
                         </div>
