@@ -58,13 +58,18 @@ const styles = theme => ({
 
 })
 
+let youtube
+
 class Translate extends Component {    
     state = {
-        data: new Array
+        data: new Array,
+        startTime : 0,
     }
+
 
     constructor(props){
         super(props)
+
         
         let subtitles = new Array
         this.fetchVideoURL(this.props.match.params.url)
@@ -81,10 +86,29 @@ class Translate extends Component {
             .then(() => (this.setState({ data: subtitles })))
             .catch(err => console.error(err))
     }
+
     fetchVideoURL = (url) => {
-        return fetch('http://75ab28e8.ngrok.io/Trans/' + url)
+        return fetch('http://5373bf32.ngrok.io/Trans/' + url)
     }
- 
+
+
+    
+    callBackFunction = (getStartTime)=>{
+        this.setState({
+            startTime : getStartTime
+        })       
+    }
+
+    _seekTo = (player)=>{
+        player.target.seekTo(this.state.startTime, false)
+    }
+
+    
+    onPlayerReady = (player) =>{
+        console.log(document.getElementById("player"))        
+
+        player.target.playVideo()
+    }
 
     render() {
         const { classes } = this.props;
@@ -93,8 +117,10 @@ class Translate extends Component {
                 <NavBar></NavBar>
                 <div>
                     <div className={classes.left}>
-                        <div><YouTube _seekTo={this._seekTo} videoId={this.props.match.params.url} seekTo={this._seekTo}/></div>
-                        <div className={classes.RawBlock}><RawBlock data={this.state.data} /></div>
+                        <div><YouTube id = "player" videoId={this.props.match.params.url} onStateChange={this._seekTo} onReady ={this.onPlayerReady}/></div>
+                        <div><p>{this.state.startTime}</p></div>
+                        <div className={classes.RawBlock}><RawBlock data={this.state.data} transCallBack={this.callBackFunction}/>
+                        </div>
                     </div>
                     <div className={classes.right}>
                         <div className={classes.TransBlock}><TransBlock /></div>

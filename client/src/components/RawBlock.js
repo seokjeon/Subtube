@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { Paper, Table, TableRow, TableHead, TableBody, TableCell, withStyles } from '@material-ui/core'
 import RawItem from '../components/RawItem'
 
-
-
 const styles = theme => ({
     cell : {
         width : "100%"
@@ -12,15 +10,16 @@ const styles = theme => ({
 
 class RawBlock extends Component {    
     state = {
-        selected: null,
+        selected: null
+    }
+    
+    callbackFunc = (childData, startTime) => {
+        this.setState({ 
+            selected: childData,
+        })
+        this.props.transCallBack(startTime)
     }
 
-    callbackFunc = (childData) => {
-        this.setState({ selected: childData })
-    }
-    parentToSeek = (start, duration)=>{
-        this.props._seekTo(start, duration);
-    }
     render() {
         const {classes} = this.props
         const tableData = this.props.data
@@ -31,7 +30,7 @@ class RawBlock extends Component {
                         <Table>
                             <TableBody>
                                 <TableRow className={classes.cell} bgcolor={this.state.selected == index ? {color : `rgb(0, 40, 180)`} : null}>
-                                    <RawItem parentToSeek={this.parentToSeek} parentCallback={this.callbackFunc} row={index} data={elem}/>
+                                <RawItem parentCallback={this.callbackFunc} row={index} data={elem}/>
                                 </TableRow>
 
                             </TableBody>
