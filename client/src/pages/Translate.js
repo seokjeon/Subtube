@@ -32,7 +32,7 @@ const styles = theme => ({
         width: '100%',
         overflow: 'auto',
         minHeight: '30vh',
-        marginTop: '20px',
+        marginTop: '20px'
     },
     OtherSub: {
         maxHeight: "50vh",
@@ -41,10 +41,16 @@ const styles = theme => ({
         minHeight: '30vh',
         marginTop: '20px',
         overflowY: 'scroll',
+        '&::-webkit-scrollbar' : {
+            display : 'none'
+        }
 
     }, root: {
         width: '100%',
-        overflowX: "auto"
+        overflowX: "auto",
+        '&::-webkit-scrollbar' : {
+            display : 'none'
+        }
     },
     RawBlock: {
         maxHeight: "50vh",
@@ -53,6 +59,9 @@ const styles = theme => ({
         minHeight: '30vh',
         marginTop: '20px',
         overflowY: 'scroll',
+        '&::-webkit-scrollbar' : {
+            display : 'none'
+        }
     },
     
 
