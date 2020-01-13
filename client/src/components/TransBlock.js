@@ -28,7 +28,6 @@ const styles = theme => ({
 class TransBlock extends Component {
     handleSubmit = (e) => {
         const form = document.getElementById('frmtransblock')
-
         form.submit()
     }
     render() {
