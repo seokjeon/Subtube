@@ -20,6 +20,7 @@ class App extends Component {
   state = {
       subs : ""
   }
+  
   componentDidMount(){
     this.callApi().then(res => this.setState({subs : res}))
   }

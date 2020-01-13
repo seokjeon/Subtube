@@ -70,16 +70,36 @@ const styles = theme => ({
 
 class Translate extends Component {    
     
+      callApi = async ()=>{
+          console.log("in")
+        const response = await fetch('http://localhost:5000/api')
+        const body = await response.json()
+        return body
+     }
+    
     state = {
         data: new Array,
         yt : null,
         startTime : 0,
         duration : null,
+        otherSub : new Array
     }
 
     constructor(props){
         super(props)
-        
+
+        let otherSubs = new Array
+        this.callApi().then(res => res.forEach(sub =>{
+            otherSubs.push(sub)
+        }))
+        .then(() =>{
+            console.log(otherSubs)
+            this.setState({otherSub : otherSubs})
+        })
+        .catch(err=>console.err(err))
+
+        console.log(otherSubs)
+
         let subtitles = new Array
         this.fetchVideoURL(this.props.match.params.url)
             .then(res => res.json())
@@ -97,7 +117,8 @@ class Translate extends Component {
     }
 
     fetchVideoURL = (url) => {
-        return fetch('http://6a22e225.ngrok.io/Trans/' + url)
+        console.log(url)
+        return fetch('/trans/' + url)
     }
 
     onPlayerReady = (player) =>{
@@ -114,13 +135,13 @@ class Translate extends Component {
             startTime : getStartTime,
             duration : durationTime
         }, ()=>this.clicked())
-    }
+    } 
 
     clicked = ()=>{
         this.state.yt.seekTo(this.state.startTime, true)
         this.state.yt.playVideo()
         //TODO : change timeout 2000 to duration
-        setTimeout(()=>this.state.yt.pauseVideo(), 2000)
+        setTimeout(()=>this.state.yt.pauseVideo(), Number(this.state.duration)*1000 + 350)
     }
 
     render() {
@@ -132,7 +153,6 @@ class Translate extends Component {
                 <div>
                     <div className={classes.left}>
                         <div className ={classes.video}><YouTube onStateChange={this.loopVideo} videoId={this.props.match.params.url} onReady ={this.onPlayerReady}/></div>
-                        <p>{this.state.duration}</p>
                         <div className={classes.RawBlock}><RawBlock data={this.state.data} transCallBack={this.seekClickedBlock}/>
                         </div>
                     </div>
@@ -140,7 +160,7 @@ class Translate extends Component {
                         <div className={classes.TransBlock}><TransBlock /></div>
                         <div className={classes.OtherSub}>
                             <Table className={classes.root}><TableBody>
-                                <OtherSubBlock />
+                                <OtherSubBlock otherSub = {this.state.otherSub}/>
                             </TableBody>
                             </Table>
                         </div>

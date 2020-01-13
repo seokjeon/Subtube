@@ -8,7 +8,7 @@ const styles = theme => ({
     }
 })
 
-class RawBlock extends Component {    
+class   RawBlock extends Component {    
     state = {
         selected: null
     }
