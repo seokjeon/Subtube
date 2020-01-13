@@ -2,56 +2,90 @@ const router = require('express').Router()
 
 const Video = require('../models/Video')
 const SentenceBlock = require('../models/SentenceBlock')
-// const Images = require('../models/images');
 
 
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
 
+router.get('/', function(req, res){
+  console.log("hi I'm node js server")
+  res.send("HI CLIENT I'M NODE JS")
+})
+
+
+function timeSort(a, b){
+  return Number(a.start_time) >= Number(b.start_time) ? 1 : -1
+}
+
+
 router.get('/trans/:id', function(req, res){
   videoId = req.params.id
   console.log(videoId)
-  url = 'http://75ab28e8.ngrok.io/Trans/' + videoId
+  url = 'http://74be62b8.ngrok.io/Trans/' + videoId
   
   var xhr = new XMLHttpRequest()
 
   console.log("subtitle request!")
   xhr.open('GET', url, false)
   xhr.send()
-  res.send(xhr.responseText)
-  res.end()
+  // res.send(xhr.responseText)
+  // res.end()
 
   //From here is DB processing
-  videoUrl = 'https://www.youtube.com/watch?v=' + videoId
-  // if (!Video.find({url: videoUrl})){
-    
-    
-  //   return
-  // }
+  // videoUrl = 'https://www.youtube.com/watch?v=' + videoId
+  videoUrl = videoId
 
-
-  var newVideo = Video.create({
-    url: videoUrl
+  var dataVideo
+  dataVideo = Video.findOne({url: videoUrl}, (err, result)=>{
+    dataVideo = result
   }).then(()=>{
-    console.log("Saved video successfully")
-  })
-  try{
-    subInfo = JSON.parse(xhr.responseText)
-    subInfo.forEach(element => {
-      SentenceBlock.create({
-            video_id: newVideo.id,
-            raw_eng: element.text,
-            start_time: element.start,
-            duration: element.duration 
+    console.log(dataVideo)
+    if (!dataVideo){
+      Video.create({
+        url: videoUrl
+      }).then(()=>{
+        console.log("Saved video successfully")
+      }) 
+      try{
+        subInfo = JSON.parse(xhr.responseText)
+        var subInfos = []
+        // console.log(subInfo)
+        subInfo.forEach((element, index) => {
+          // console.log(element.start, element.text)
+          if (index < subInfo.length-1){
+            var time_term = (Number(subInfo[index+1].start) - Number(element.start))
+            var dur = Number(element.duration) >= time_term ? time_term : Number(element.duration)
+            // console.log(dur)
+          }else{
+            dur = Number(element.duration)
+          }
+          var sentence = SentenceBlock.create({
+                url: videoUrl,
+                raw_eng: element.text,
+                start_time: Number(element.start),
+                duration: dur,
+                maxRec: 0
+            })
+          subInfos.push(sentence)
         })
-    })
-  }catch (e){
-    return
-  }
-  
-  
-
+        console.log("not exist")
+        var returnResult = subInfos.sort(timeSort)
+        res.send(JSON.stringify(returnResult))
+        res.end()
+      }catch (e){
+        console.log(e)
+        return
+      } 
+    }else{
+      SentenceBlock.find({url: videoUrl}, (err, result) =>{
+        console.log("exist")
+        var returnResult = result.sort(timeSort)
+        res.send(returnResult)
+        res.end()
+      })
+      
+    }
+  })
 })
 
-// router.use('/contacts', require('../routes/contacts.js'));
 // router.use('/images', require('../routes/images.js'));
 module.exports = router

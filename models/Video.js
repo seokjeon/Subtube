@@ -10,6 +10,7 @@ videoSchema.statics.create = function (payload) {
     const video = new this(payload);
     // return Promise
     return video.save();
+    // return video
   };
 
 module.exports = mongoose.model('Video', videoSchema);
