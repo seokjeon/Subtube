@@ -70,16 +70,36 @@ const styles = theme => ({
 
 class Translate extends Component {    
     
+      callApi = async ()=>{
+          console.log("in")
+        const response = await fetch('http://localhost:5000/api')
+        const body = await response.json()
+        return body
+     }
+    
     state = {
         data: new Array,
         yt : null,
         startTime : 0,
         duration : null,
+        otherSub : new Array
     }
 
     constructor(props){
         super(props)
-        
+
+        let otherSubs = new Array
+        this.callApi().then(res => res.forEach(sub =>{
+            otherSubs.push(sub)
+        }))
+        .then(() =>{
+            console.log(otherSubs)
+            this.setState({otherSub : otherSubs})
+        })
+        .catch(err=>console.err(err))
+
+        console.log(otherSubs)
+
         let subtitles = new Array
         this.fetchVideoURL(this.props.match.params.url)
             .then(res => res.json())
@@ -140,7 +160,7 @@ class Translate extends Component {
                         <div className={classes.TransBlock}><TransBlock /></div>
                         <div className={classes.OtherSub}>
                             <Table className={classes.root}><TableBody>
-                                <OtherSubBlock />
+                                <OtherSubBlock otherSub = {this.state.otherSub}/>
                             </TableBody>
                             </Table>
                         </div>

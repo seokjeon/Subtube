@@ -1,10 +1,10 @@
 const router = require('express').Router()
 const mongoose = require('mongoose')
 
+const cors = require('cors')
 const Video = require('../models/Video')
 const TranslationBlock = require('../models/TranslationBlock')
 const SentenceBlock = require('../models/SentenceBlock')
-
 
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
 
@@ -28,6 +28,17 @@ router.post('/trans/:id', function (req, res) {
   //아이콘 바꾸기
 
   console.log(processed_eng + ' / ' + translated_kor)
+})
+
+//load other people's subtitle
+router.get('/api', cors(), function(req, res){
+  console.log("/api in")
+  sentenceId = "5e1c15b747a4361fd416fef8"
+
+  TranslationBlock.find().where("sentence_block_id").equals(sentenceId).exec((err, block)=>{
+    
+    res.send(JSON.stringify(block))
+  })
 })
 
 router.get('/trans/:id', function (req, res) {
