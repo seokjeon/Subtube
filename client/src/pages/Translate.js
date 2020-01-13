@@ -97,7 +97,8 @@ class Translate extends Component {
     }
 
     fetchVideoURL = (url) => {
-        return fetch('http://6a22e225.ngrok.io/Trans/' + url)
+        console.log(url)
+        return fetch('/trans/' + url)
     }
 
     onPlayerReady = (player) =>{
@@ -114,13 +115,13 @@ class Translate extends Component {
             startTime : getStartTime,
             duration : durationTime
         }, ()=>this.clicked())
-    }
+    } 
 
     clicked = ()=>{
         this.state.yt.seekTo(this.state.startTime, true)
         this.state.yt.playVideo()
         //TODO : change timeout 2000 to duration
-        setTimeout(()=>this.state.yt.pauseVideo(), 2000)
+        setTimeout(()=>this.state.yt.pauseVideo(), Number(this.state.duration)*1000 + 350)
     }
 
     render() {
@@ -132,7 +133,7 @@ class Translate extends Component {
                 <div>
                     <div className={classes.left}>
                         <div className ={classes.video}><YouTube onStateChange={this.loopVideo} videoId={this.props.match.params.url} onReady ={this.onPlayerReady}/></div>
-                        <p>{this.state.duration}</p>
+                        <p>{Number(this.state.duration).toFixed(2)}</p>
                         <div className={classes.RawBlock}><RawBlock data={this.state.data} transCallBack={this.seekClickedBlock}/>
                         </div>
                     </div>

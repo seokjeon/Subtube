@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 // Define Schemes
 const sentenceBlockSchema = new mongoose.Schema({
-  video_id: {type: mongoose.Schema.Types.ObjectId, ref: 'Video'},
+  url: {type: String, require: true},
   raw_eng: {type: String, require: true},
   start_time: {type: String, require: true},
   duration: {type: String, require: true}
@@ -12,7 +12,8 @@ const sentenceBlockSchema = new mongoose.Schema({
 sentenceBlockSchema.statics.create = function (payload) {
     const sentence_block = new this(payload);
     // return Promise
-    return sentence_block.save();
+    sentence_block.save();
+    return sentence_block;
   };
 
 module.exports = mongoose.model('SentenceBlock', sentenceBlockSchema);

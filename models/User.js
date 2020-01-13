@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
 userSchema.statics.create = function (payload) {
     const user = new this(payload);
     // return Promise
-    return user.save();
+    user.save();
+    return user
   };
 
 module.exports = mongoose.model('User', userSchema);
