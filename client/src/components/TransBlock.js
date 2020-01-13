@@ -28,7 +28,9 @@ const styles = theme => ({
 class TransBlock extends Component {
     handleSubmit = (e) => {
         const form = document.getElementById('frmtransblock')
-
+        var cur_url = window.location.href
+        cur_url = cur_url.slice(cur_url.lastIndexOf('/')+1)
+        console.log(form.elements.video_url.value = cur_url)
         form.submit()
     }
     render() {
@@ -43,6 +45,7 @@ class TransBlock extends Component {
                     <TextField name='RawEng' multiline variant="outlined" className={classes.text}></TextField>
                     <TextField name='TranslatedKor' multiline variant="outlined" className={classes.text}></TextField>
                     <div className={classes.votesText}><Typography variant='caption'>추천수</Typography></div>
+                    <input type='hidden' name="video_url"></input>
                 </form>
             </div>
 
