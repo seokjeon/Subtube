@@ -38,7 +38,8 @@ router.post('/trans/:id', function (req, res) {
   })
   
   res.status(200)
-
+  
+  
 })
 
 //load other people's subtitle
