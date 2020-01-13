@@ -19,13 +19,13 @@ class RawItem extends Component {
 
     var startHour = Math.floor(Number(sub.start_time) / 3600)
     var startMin = Math.floor(Number(sub.start_time) / 60) % 60
-    var startSec = Number(sub.start_time).toFixed(2) - 60 * startMin - 3600 * startHour
+    var startSec = (Number(sub.start_time) - 60 * startMin - 3600 * startHour).toFixed(2)
 
     var endTime = (Number(sub.start_time) + Number(sub.duration)).toFixed(2)
 
     var endHour = Math.floor(Number(endTime) / 3600)
     var endMin = Math.floor(Number(endTime) / 60) % 60
-    var endSec = Number(endTime).toFixed(2) - 60 * endMin - 3600 * endHour
+    var endSec = (Number(endTime) - 60 * endMin - 3600 * endHour).toFixed(2)
 
 
     return (

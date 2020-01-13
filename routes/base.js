@@ -1,12 +1,14 @@
 const router = require('express').Router()
+const mongoose = require('mongoose')
 
 const Video = require('../models/Video')
+const TranslationBlock = require('../models/TranslationBlock')
 const SentenceBlock = require('../models/SentenceBlock')
 
 
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
 
-router.get('/', function(req, res){
+router.get('/', function (req, res) {
   console.log("hi I'm node js server")
   res.send("HI CLIENT I'M NODE JS")
 })
@@ -16,12 +18,27 @@ function timeSort(a, b){
   return Number(a.start_time) >= Number(b.start_time) ? 1 : -1
 }
 
-
-router.get('/trans/:id', function(req, res){
-  videoId = req.params.id
-  console.log(videoId)
-  url = 'http://74be62b8.ngrok.io/Trans/' + videoId
   
+router.post('/trans/:id', function (req, res) {
+  const processed_eng = req.body.RawEng
+  const translated_kor = req.body.TranslatedKor
+  
+  //DB에 저장
+  TranslationBlock.create({
+    sentence_block_id: '5e1c15b747a4361fd416fef8',
+    processed_eng: processed_eng,
+    translated_kor: translated_kor,
+    num_of_votes: 4967
+  })
+  //아이콘 바꾸기
+
+  console.log(processed_eng + ' / ' + translated_kor)
+})
+
+router.get('/trans/:id', function (req, res) {
+  videoId = req.params.id
+  url = 'http://c1235100.ngrok.io/Trans/' + videoId
+
   var xhr = new XMLHttpRequest()
 
   console.log("subtitle request!")
