@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const mongoose = require('mongoose')
+const mongoose = require('mongoose').Types.ObjectId
 const faker = require('faker')
 
 const cors = require('cors')
@@ -39,10 +39,7 @@ router.post('/trans/:id', function (req, res) {
       })
     })
   res.status(200)
-  // console.log(SentenceBlock.find({video_id: Video.find({url: video_url})._id})._id)
-  //DB에 저장
 
-  //아이콘 바꾸기
   TranslationBlock.create({
     sentence_block_id: '5e1c15b747a4361fd416fef8',
     processed_eng: processed_eng,
@@ -57,10 +54,10 @@ router.post('/trans/:id', function (req, res) {
 
 //load other people's subtitle
 router.get('/api', cors(), function(req, res){
-  console.log("/api in")
-  sentenceId = "5e1c15b747a4361fd416fef8"
-
-  TranslationBlock.find().where("sentence_block_id").equals(sentenceId).exec((err, block)=>{
+  const objectID = req.param('objectID')
+  let obj = new mongoose(objectID)
+  TranslationBlock.find().where("sentence_block_id").equals(obj).exec((err, block)=>{
+    if(err) console.log("/api error : ", err)
     res.send(JSON.stringify(block))
   })
 })
@@ -85,19 +82,14 @@ router.get('/trans/:id', function (req, res) {
     if (!dataVideo){
       Video.create({
         url: videoUrl
-      }).then(()=>{
-        console.log("Saved video successfully")
-      }) 
+      })
       try{
         subInfo = JSON.parse(xhr.responseText)
         var subInfos = []
-        // console.log(subInfo)
         subInfo.forEach((element, index) => {
-          // console.log(element.start, element.text)
           if (index < subInfo.length-1){
             var time_term = (Number(subInfo[index+1].start) - Number(element.start))
             var dur = Number(element.duration) >= time_term ? time_term : Number(element.duration)
-            // console.log(dur)
           }else{
             dur = Number(element.duration)
           }
@@ -110,7 +102,6 @@ router.get('/trans/:id', function (req, res) {
             })
           subInfos.push(sentence)
         })
-        console.log("not exist")
         var returnResult = subInfos.sort(timeSort)
         res.send(JSON.stringify(returnResult))
         res.end()
@@ -120,7 +111,6 @@ router.get('/trans/:id', function (req, res) {
       } 
     }else{
       SentenceBlock.find({url: videoUrl}, (err, result) =>{
-        console.log("exist")
         var returnResult = result.sort(timeSort)
         res.send(returnResult)
         res.end()

@@ -8,18 +8,19 @@ const styles = theme => ({
     }
 })
 
-class   RawBlock extends Component {    
+class RawBlock extends Component {    
     state = {
         selected: null
     }
     
-    callbackFunc = (childData, startTime, durationTime) => {
+    callbackFunc = async (childData, startTime, durationTime) => {
         this.setState({ 
             selected: childData,
         })
-        
-        this.props.transCallBack(startTime, durationTime)
+        await this.props.transCallBack(startTime, durationTime, childData)
+        await this.props.sendTranslate()
     }
+    
 
     render() {
         const {classes} = this.props

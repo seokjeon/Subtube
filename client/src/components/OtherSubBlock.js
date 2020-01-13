@@ -27,7 +27,9 @@ const styles = theme => ({
 class OtherSubBlock extends Component {
 
     render() {
-        let subData = this.props.otherSub
+        let subData= this.props.otherSub
+        if(!subData)
+            return(<div></div>)
         const { classes } = this.props
         return subData.map((data, index) => {
             return (
