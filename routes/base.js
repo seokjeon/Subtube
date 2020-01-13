@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const mongoose = require('mongoose')
+const faker = require('faker')
 
 const cors = require('cors')
 const Video = require('../models/Video')
@@ -23,9 +24,10 @@ router.post('/trans/:id', function (req, res) {
     sentence_block_id: '5e1c15b747a4361fd416fef8',
     processed_eng: processed_eng,
     translated_kor: translated_kor,
-    num_of_votes: 4967
+    num_of_votes: faker.random.number()
   })
-  //아이콘 바꾸기
+
+  res.end()
 
   console.log(processed_eng + ' / ' + translated_kor)
 })
@@ -36,7 +38,6 @@ router.get('/api', cors(), function(req, res){
   sentenceId = "5e1c15b747a4361fd416fef8"
 
   TranslationBlock.find().where("sentence_block_id").equals(sentenceId).exec((err, block)=>{
-    
     res.send(JSON.stringify(block))
   })
 })
