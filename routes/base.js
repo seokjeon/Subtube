@@ -18,20 +18,24 @@ router.post('/trans/:id', function (req, res) {
   const video_url = req.body.video_url
   const processed_eng = req.body.RawEng
   const translated_kor = req.body.TranslatedKor
-  
+
   console.log(video_url)
-  Video.find({url: video_url}, (err, video) =>{
-    TranslationBlock.create({
-      sentence_block_id: video[0]._id,
-      processed_eng: processed_eng,
-      translated_kor: translated_kor,
-      num_of_votes: 4967
+  Video.find({ url: video_url })
+    .then((err, video) => {
+      SentenceBlock.find({ video_id: video._id })
     })
-  })
+    .then((err, sentence) => {
+      TranslationBlock.create({
+        sentence_block_id: sentence._id,
+        processed_eng: processed_eng,
+        translated_kor: translated_kor,
+        num_of_votes: 4967
+      })
+    })
   res.status(200)
   // console.log(SentenceBlock.find({video_id: Video.find({url: video_url})._id})._id)
   //DB에 저장
-  
+
   //아이콘 바꾸기
 
   console.log(processed_eng + ' / ' + translated_kor)
