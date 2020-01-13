@@ -31,10 +31,15 @@
     "case-sensitive-paths-webpack-plugin": "^2.2.0",
     "concurrently": "^5.0.2",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "cors": "^2.8.5",
 =======
     "css-loader": "^3.4.2",
 >>>>>>> d8c38bff03d319f18891b150d9bd74f6a046a4b4
+=======
+    "cors": "^2.8.5",
+    "css-loader": "^3.4.2",
+>>>>>>> 42
     "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "eslint-loader": "^3.0.3",
