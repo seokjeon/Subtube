@@ -24,32 +24,21 @@ router.post('/trans/:id', function (req, res) {
   const video_url = req.body.video_url
   const processed_eng = req.body.RawEng
   const translated_kor = req.body.TranslatedKor
+  const startTime = req.body.startTime
 
-  console.log(video_url)
-  Video.find({ url: video_url })
-    .then((err, video) => {
-      SentenceBlock.find({ video_id: video._id })
+  SentenceBlock.find().where("url").equals(video_url)
+  .where("start_time").equals(startTime)
+  .exec((err, data)=>{
+    TranslationBlock.create({
+      sentence_block_id: data._id,
+      processed_eng: processed_eng,
+      translated_kor: translated_kor,
+      num_of_votes: 0
     })
-    .then((err, sentence) => {
-      TranslationBlock.create({
-        sentence_block_id: sentence._id,
-        processed_eng: processed_eng,
-        translated_kor: translated_kor,
-        num_of_votes: 4967
-      })
-    })
+  })
+  
   res.status(200)
 
-  TranslationBlock.create({
-    sentence_block_id: '5e1c15b747a4361fd416fef8',
-    processed_eng: processed_eng,
-    translated_kor: translated_kor,
-    num_of_votes: faker.random.number()
-  })
-
-  res.end()
-
-  console.log(processed_eng + ' / ' + translated_kor)
 })
 
 //load other people's subtitle

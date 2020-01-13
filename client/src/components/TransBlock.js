@@ -26,6 +26,7 @@ const styles = theme => ({
     }
 })
 class TransBlock extends Component {
+
     handleSubmit = (e) => {
         const form = document.getElementById('frmtransblock')
         var cur_url = window.location.href
@@ -46,6 +47,7 @@ class TransBlock extends Component {
                     <TextField name='TranslatedKor' multiline variant="outlined" className={classes.text}></TextField>
                     <div className={classes.votesText}><Typography variant='caption'>추천수</Typography></div>
                     <input type='hidden' name="video_url"></input>
+                    <input type='hidden' name="startTime" value={this.props.start}></input>
                 </form>
             </div>
 
