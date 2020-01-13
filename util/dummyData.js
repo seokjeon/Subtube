@@ -13,37 +13,35 @@ MongoClient.connect(url, function (err, client) {
     const db = client.db(dbName);
 
     // Users
-    const usersCollection = db.collection("users");
+    const usersCollection = db.collection("User");
     let users = [];
     for (let i = 0; i < 10; i += 1) {
-        let userName = faker.name.findName()
-        let rewardTime = faker.random.number(10)
+        let name = faker.name.findName()
+        let contribution_time = faker.random.number(10)
 
         let newUser = {
-            userName,
-            rewardTime
+            name,
+            contribution_time
         };
         users.push(newUser);
     }
     usersCollection.insertMany(users);
 
     //Video
-    const videoCollection = db.collection("videos")
+    const videoCollection = db.collection("Video")
     let videos = []
     for (let i = 0; i < 10; i += 1) {
         let url = faker.internet.url()
-        let now = faker.date.recent()
 
         let newVideo = {
-            url,
-            now
+            url
         };
         videos.push(newVideo);
     }
     videoCollection.insertMany(videos);
 
 
-    const sentenceCollection = db.collection("sentence_block")
+    const sentenceCollection = db.collection("SentenceBlock")
     let blocks = []
     for (let i = 0; i < 10; i += 1) {
         let video_id = videos[i]._id
@@ -64,6 +62,29 @@ MongoClient.connect(url, function (err, client) {
     }
 
     sentenceCollection.insertMany(blocks);
+
+
+    const transCollection = db.collection("TranslationBlock")
+    let transBlock = []
+    for (let i = 0; i < 10; i += 1) {
+        let sentence_block_id = blocks[i]._id
+
+        for (let j = 0; j < 5; j += 1) {
+            let processed_eng = faker.lorem.sentence()
+            let translated_kor = faker.lorem.sentence()
+            let num_of_votes = faker.random.number()
+
+            let newBlock = {
+                sentence_block_id,
+                processed_eng,
+                translated_kor,
+                num_of_votes
+            };
+            transBlock.push(newBlock);
+        }
+    }
+
+    transCollection.insertMany(transBlock);
 
     /*
     //Translateion
