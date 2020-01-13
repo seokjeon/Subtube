@@ -7,7 +7,16 @@ class Home extends Component {
 
     redirectPage = ()=>{
         let url = document.getElementById("url").value
-        if(url) return this.props.history.push(`/Trans/` + document.getElementById("url").value)
+        if(url){ 
+          //Get videoId from full video url
+          var indexOfId = url.indexOf("v=")
+          if (indexOfId == -1){
+            var videoId = url
+          }else{
+            var videoId = url.slice(indexOfId+2, indexOfId+13)
+          }
+            return this.props.history.push(`/Trans/` + videoId)
+        }
     }
     handleKeyPress = (e)=>{
         if(e.charCode ===13){
