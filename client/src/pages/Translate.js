@@ -97,7 +97,7 @@ class Translate extends Component {
     }
 
     fetchVideoURL = (url) => {
-        return fetch('http://c1235100.ngrok.io/Trans/' + url)
+        return fetch('http://6a22e225.ngrok.io/Trans/' + url)
     }
 
     onPlayerReady = (player) =>{
