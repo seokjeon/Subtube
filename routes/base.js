@@ -9,7 +9,8 @@ var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
 
 router.get('/trans/:id', function(req, res){
   videoId = req.params.id
-  url = 'http://5dee59d4.ngrok.io/Trans/' + videoId
+  console.log(videoId)
+  url = 'http://75ab28e8.ngrok.io/Trans/' + videoId
   
   var xhr = new XMLHttpRequest()
 
@@ -33,16 +34,21 @@ router.get('/trans/:id', function(req, res){
   }).then(()=>{
     console.log("Saved video successfully")
   })
-
-  subInfo = JSON.parse(xhr.responseText)
-  subInfo.forEach(element => {
-    SentenceBlock.create({
-          video_id: newVideo.id,
-          raw_eng: element.text,
-          start_time: element.start,
-          duration: element.duration 
-      })
-  })
+  try{
+    subInfo = JSON.parse(xhr.responseText)
+    subInfo.forEach(element => {
+      SentenceBlock.create({
+            video_id: newVideo.id,
+            raw_eng: element.text,
+            start_time: element.start,
+            duration: element.duration 
+        })
+    })
+  }catch (e){
+    return
+  }
+  
+  
 
 })
 
