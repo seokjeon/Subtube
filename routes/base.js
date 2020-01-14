@@ -73,7 +73,7 @@ router.get('/vote', (req, res)=>{
 
 router.get('/trans/:id', function (req, res) {
   videoId = req.params.id
-  url = 'http://81ccc03a.ngrok.io/Trans/' + videoId
+  url = 'http://a1d2760c.ngrok.io/Trans/' + videoId
 
   var xhr = new XMLHttpRequest()
 
@@ -93,6 +93,7 @@ router.get('/trans/:id', function (req, res) {
         url: videoUrl
       })
       try {
+        console.log(xhr.responseText)
         subInfo = JSON.parse(xhr.responseText)
         var subInfos = []
         subInfo.forEach((element, index) => {
