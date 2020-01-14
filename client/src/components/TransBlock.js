@@ -60,7 +60,6 @@ class TransBlock extends Component {
                     </div>
                     <TextField name='RawEng' multiline variant="outlined" className={classes.text}></TextField>
                     <TextField name='TranslatedKor' multiline variant="outlined" className={classes.text}></TextField>
-                    <div className={classes.votesText}><Typography variant='caption'>추천수</Typography></div>
                     <input type='hidden' name="video_url"></input>
                     <input type='hidden' name="startTime" value={this.props.start}></input>
                 </form>

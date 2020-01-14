@@ -4,6 +4,9 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ClearIcon from '@material-ui/icons/Clear'
 import { TableRow, TableCell, Typography } from '@material-ui/core'
 
+const faker = require('faker')
+faker.locale = "ko"
+
 const styles = theme => ({
 
     icon: {
@@ -26,7 +29,9 @@ const styles = theme => ({
 })
 
 class OtherSubBlock extends Component {
-
+    state = {
+        data : new Array
+    }
     delete_translation = async(index)=>{
         let url = new URL("http://localhost:5000/trans/delete")
         url.searchParams.append('objectID', this.props.otherSub[index]._id)
@@ -42,10 +47,28 @@ class OtherSubBlock extends Component {
         })
         .catch(err=>console.log('delete err: ', err))
     }
+    
+
+
+    updateVote = async (id, index)=>{
+
+        let url = new URL('http://localhost:5000/vote')
+        url.searchParams.append('objectID',id)
+        const response = await fetch(url)
+        const body = await response.json()
+        
+        const data = this.props.otherSub
+        data[index].num_of_votes = body
+        this.setState({data : data})
+       
+    }
+
+
     render() {
-        let subData = this.props.otherSub
-        if (!subData)
-            return (<div></div>)
+        
+        let subData= this.props.otherSub
+        if(!subData)
+            return(<div></div>)
         const { classes } = this.props
         return subData.map((data, index) => {
             return (
@@ -53,13 +76,13 @@ class OtherSubBlock extends Component {
                     <TableRow>
                         <TableCell>
                             <div>
-                                <Typography className={classes.votesText} variant='caption'>USERID</Typography>
+                                <Typography className={classes.votesText} variant='caption'>Subtube 관리자</Typography>
                                 <ClearIcon className={classes.icon} onClick={()=>this.delete_translation(index)} style={{ color: `rgb(230, 0, 0)` }}></ClearIcon>
                             </div>
                             <Typography className={classes.text} variant='h6'>{data.processed_eng}</Typography>
                             <Typography className={classes.text} variant='h6'>{data.translated_kor}</Typography>
                             <div className={classes.votesText}>
-                                <div>
+                                <div onClick ={()=>this.updateVote(data._id, index)}>
                                     <ThumbUpIcon color="primary"></ThumbUpIcon>
                                     <Typography variant='caption'>{data.num_of_votes}</Typography>
                                 </div>
