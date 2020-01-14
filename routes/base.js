@@ -43,7 +43,8 @@ router.post('/trans/create', function (req, res) {
         sentence_block_id: data[0]._id,
         processed_eng: processed_eng,
         translated_kor: translated_kor,
-        num_of_votes: 0
+        num_of_votes: 0,
+        url : video_url
       })
     })
 
@@ -80,7 +81,7 @@ router.get('/vote', (req, res)=>{
 
 router.get('/trans/:id', function (req, res) {
   videoId = req.params.id
-  url = 'http://81ccc03a.ngrok.io/Trans/' + videoId
+  url = 'http://a1d2760c.ngrok.io/Trans/' + videoId
 
   var xhr = new XMLHttpRequest()
 
