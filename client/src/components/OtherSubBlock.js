@@ -26,7 +26,26 @@ const styles = theme => ({
 
 class OtherSubBlock extends Component {
 
+    state = {
+        data : new Array
+    }
+
+    updateVote = async (id, index)=>{
+
+        let url = new URL('http://localhost:5000/vote')
+        url.searchParams.append('objectID',id)
+        const response = await fetch(url)
+        const body = await response.json()
+        
+        const data = this.props.otherSub
+        data[index].num_of_votes = body
+        this.setState({data : data})
+       
+    }
+
+
     render() {
+        
         let subData= this.props.otherSub
         if(!subData)
             return(<div></div>)
@@ -40,7 +59,7 @@ class OtherSubBlock extends Component {
                             <Typography className={classes.text} variant='h6'>{data.processed_eng}</Typography>
                             <Typography className={classes.text} variant='h6'>{data.translated_kor}</Typography>
                             <div className={classes.votesText}>
-                                <div>
+                                <div onClick ={()=>this.updateVote(data._id, index)}>
                                     <ThumbUpIcon color="primary"></ThumbUpIcon>
                                     <Typography variant='caption'>{data.num_of_votes}</Typography>
                                 </div>

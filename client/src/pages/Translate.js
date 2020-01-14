@@ -71,7 +71,6 @@ const styles = theme => ({
 class Translate extends Component {
 
     callApi = async () => {
-        console.log("in")
         let url = new URL('http://localhost:5000/api')
         url.searchParams.append('objectID',
             this.state.data[this.state.btnIndex]._id)

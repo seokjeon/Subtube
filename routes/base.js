@@ -51,6 +51,17 @@ router.get('/api', cors(), function(req, res){
   })
 })
 
+router.get('/vote', cors(), (req, res)=>{
+  const objectID = req.param('objectID')
+
+  let obj = new mongoose(objectID)
+  TranslationBlock.findOneAndUpdate({"_id" : obj}, { $inc : {num_of_votes : 1}}, {returnResult : true}, (err, data)=>{
+    if(err) console.log("/vote error : ", err)
+    res.send(JSON.stringify(data.num_of_votes + 1))
+  });
+  
+})
+
 router.get('/trans/:id', function (req, res) {
   videoId = req.params.id
   url = 'http://81ccc03a.ngrok.io/Trans/' + videoId
