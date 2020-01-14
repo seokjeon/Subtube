@@ -101,6 +101,7 @@ router.get('/trans/:id', function (req, res) {
         url: videoUrl
       })
       try {
+        console.log(xhr.responseText)
         subInfo = JSON.parse(xhr.responseText)
         var subInfos = []
         subInfo.forEach((element, index) => {
