@@ -64,13 +64,13 @@ class MyPage extends Component {
                     <div className={classes.center}>
                         <img className={classes.circleImageLayout} src="https://source.unsplash.com/random" />
                         <Typography variant="h6">Subtube Administrator</Typography>
-                        <Typography variant="subtitle1">35H</Typography>
+                        <Typography variant="subtitle1">3m</Typography>
                     </div>
 
                 </div>
                 <div className={classes.right}>
                     <div className={classes.myTransBlock}>
-                        <Table className={classes.root}><TableBody><MyTranslate /></TableBody></Table>
+                        <Table><TableBody><MyTranslate /></TableBody></Table>
                     </div>
                 </div>
             </div>
