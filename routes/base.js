@@ -20,7 +20,8 @@ function timeSort(a, b){
 }
 
   
-router.post('/trans/:id', function (req, res) {
+router.post('/trans/create', function (req, res) {
+  console.log(req.body)
   const video_url = req.body.video_url
   const processed_eng = req.body.RawEng
   const translated_kor = req.body.TranslatedKor
@@ -37,9 +38,7 @@ router.post('/trans/:id', function (req, res) {
     })
   })
   
-  res.status(200)
-  
-  
+  res.status(200).send("Successfully Saved!")
 })
 
 //load other people's subtitle
