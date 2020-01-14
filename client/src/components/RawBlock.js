@@ -13,13 +13,14 @@ class RawBlock extends Component {
         selected: null
     }
     
-    callbackFunc = (childData, startTime, durationTime) => {
+    callbackFunc = async (childData, startTime, durationTime) => {
         this.setState({ 
             selected: childData,
         })
-        
-        this.props.transCallBack(startTime, durationTime)
+        await this.props.transCallBack(startTime, durationTime, childData)
+        await this.props.sendTranslate()
     }
+    
 
     render() {
         const {classes} = this.props
@@ -31,7 +32,7 @@ class RawBlock extends Component {
                         <Table>
                             <TableBody>
                                 <TableRow className={classes.cell} bgcolor={this.state.selected == index ? 'lavender' : null}>
-                                <RawItem parentCallback={this.callbackFunc} row={index} data={elem}/>
+                                <RawItem parentCallback={this.callbackFunc} row={index} data={elem} />
                                 </TableRow>
 
                             </TableBody>

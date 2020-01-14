@@ -3,6 +3,7 @@ import {withStyles} from '@material-ui/core/styles'
 import {Home, MyPage, Translate} from './pages'
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import './App.css';
+import {CSSTransition, TransitionGroup} from 'react-transition-group'
 
 
 const styles = theme =>({
@@ -20,13 +21,14 @@ class App extends Component {
   state = {
       subs : ""
   }
+  
   componentDidMount(){
     this.callApi().then(res => this.setState({subs : res}))
   }
   
 
   callApi = async ()=>{
-    const response = await fetch('http://localhost:5000/')
+    const response = await fetch('/')
     console.log("HELLO")
     const body = await response.json()
     return body
@@ -40,6 +42,7 @@ class App extends Component {
         <Route path ="/mypage" component = {MyPage}/>
         <Route exact path ="/Trans" component = {Translate}/>
       </Router>
+      
     )
     
   }

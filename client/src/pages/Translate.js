@@ -23,10 +23,7 @@ const styles = theme => ({
         minHeight: 400,
     },
     video: {
-        overflow: 'auto',
-        minHeight: '35vh',
-        marginTop: '20px',
-        display : 'inline-block'
+        width: "100%",
     },
 
     TransBlock: {
@@ -42,15 +39,15 @@ const styles = theme => ({
         minHeight: '30vh',
         marginTop: '20px',
         overflowY: 'scroll',
-        '&::-webkit-scrollbar' : {
-            display : 'none'
+        '&::-webkit-scrollbar': {
+            display: 'none'
         }
 
     }, root: {
         width: '100%',
         overflowX: "auto",
-        '&::-webkit-scrollbar' : {
-            display : 'none'
+        '&::-webkit-scrollbar': {
+            display: 'none'
         }
     },
     RawBlock: {
@@ -60,26 +57,49 @@ const styles = theme => ({
         minHeight: '30vh',
         marginTop: '20px',
         overflowY: 'scroll',
-        '&::-webkit-scrollbar' : {
-            display : 'none'
+        '&::-webkit-scrollbar': {
+            display: 'none'
         }
     },
-    
-
 })
 
-class Translate extends Component {    
+class Translate extends Component {
     
-    state = {
-        data: new Array,
-        yt : null,
-        startTime : 0,
-        duration : null,
+    callApi = async () => {
+        
+        const response = await fetch('/api/'+this.state.data[this.state.btnIndex]._id)         
+        const body = await response.json()
+
+        let otherSubs = new Array
+        await body.forEach(sub => {
+            otherSubs.push(sub)
+        })
+    
+        await this.setState({ otherSub: otherSubs })
     }
 
-    constructor(props){
+    state = {
+        data: new Array,
+        yt: null,
+        startTime: 0,
+        duration: null,
+        btnIndex: null,
+        otherSub: new Array,
+        timeOut : null
+    }
+
+    constructor(props) {
         super(props)
-        
+
+        let otherSubs = new Array
+        this.callApi().then(res => res.forEach(sub => {
+            otherSubs.push(sub)
+        }))
+            .then(() => {
+                this.setState({ otherSub: otherSubs })
+            })
+            .catch(err => console.error(err))
+
         let subtitles = new Array
         this.fetchVideoURL(this.props.match.params.url)
             .then(res => res.json())
@@ -97,30 +117,34 @@ class Translate extends Component {
     }
 
     fetchVideoURL = (url) => {
-        return fetch('http://c1235100.ngrok.io/Trans/' + url)
+        console.log(url)
+        return fetch('/trans/' + url)
     }
 
-    onPlayerReady = (player) =>{
+    onPlayerReady = (player) => {
         player.target.playVideo()
-        
+
         this.setState({
-            yt : player.target
+            yt: player.target
         })
-        
+
     }
 
-    seekClickedBlock = (getStartTime, durationTime)=>{
+    seekClickedBlock = (getStartTime, durationTime, selectedIndex) => {
         this.setState({
-            startTime : getStartTime,
-            duration : durationTime
-        }, ()=>this.clicked())
+            startTime: getStartTime,
+            duration: durationTime,
+            btnIndex: selectedIndex
+        }, () => this.clicked())
     }
 
-    clicked = ()=>{
+    clicked = () => {
+        clearTimeout(this.state.timeOut)
+        
         this.state.yt.seekTo(this.state.startTime, true)
         this.state.yt.playVideo()
-        //TODO : change timeout 2000 to duration
-        setTimeout(()=>this.state.yt.pauseVideo(), 2000)
+        const timeOut = setTimeout(() => this.state.yt.pauseVideo(), Number(this.state.duration) * 1000 + 350)
+        this.setState({timeOut : timeOut})
     }
 
     render() {
@@ -131,24 +155,21 @@ class Translate extends Component {
                 <NavBar></NavBar>
                 <div>
                     <div className={classes.left}>
-                        <div className ={classes.video}><YouTube onStateChange={this.loopVideo} videoId={this.props.match.params.url} onReady ={this.onPlayerReady}/></div>
-                        <p>{this.state.duration}</p>
-                        <div className={classes.RawBlock}><RawBlock data={this.state.data} transCallBack={this.seekClickedBlock}/>
+                        <div className={classes.video}><YouTube onStateChange={this.loopVideo} videoId={this.props.match.params.url} onReady={this.onPlayerReady} /></div>
+                        <div className={classes.RawBlock}><RawBlock sendTranslate={this.callApi} data={this.state.data} transCallBack={this.seekClickedBlock} />
                         </div>
                     </div>
                     <div className={classes.right}>
-                        <div className={classes.TransBlock}><TransBlock /></div>
+                        <div className={classes.TransBlock}><TransBlock start={this.state.startTime} refresh_trans_list={this.callApi}/></div>
                         <div className={classes.OtherSub}>
                             <Table className={classes.root}><TableBody>
-                                <OtherSubBlock />
+                            <OtherSubBlock otherSub={this.state.otherSub} refresh_trans_list={this.callApi}/>
                             </TableBody>
                             </Table>
                         </div>
                     </div>
                 </div>
-
             </div>
-
         )
     }
 
