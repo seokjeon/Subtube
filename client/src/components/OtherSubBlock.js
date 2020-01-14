@@ -33,7 +33,7 @@ class OtherSubBlock extends Component {
         data : new Array
     }
     delete_translation = async(index)=>{
-        let url = new URL("http://localhost:5000/trans/delete")
+        let url = new URL("http://0.0.0.0:5000/trans/delete")
         url.searchParams.append('objectID', this.props.otherSub[index]._id)
         
         fetch(url,{
@@ -52,7 +52,7 @@ class OtherSubBlock extends Component {
 
     updateVote = async (id, index)=>{
 
-        let url = new URL('http://localhost:5000/vote')
+        let url = new URL('http://0.0.0.0:5000/vote')
         url.searchParams.append('objectID',id)
         const response = await fetch(url)
         const body = await response.json()

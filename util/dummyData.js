@@ -2,7 +2,7 @@ const faker = require('faker')
 const assert = require('assert')
 const _ = require("lodash")
 const MongoClient = require('mongodb').MongoClient
-const url = "mongodb://localhost:27017"
+const url = "mongodb://0.0.0.0:27017"
 const dbName = "subtube_build_test"
 
 faker.locale = 'ko'
