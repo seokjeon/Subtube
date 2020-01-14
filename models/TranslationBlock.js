@@ -4,7 +4,8 @@ const translationBlockSchema = new mongoose.Schema({
   sentence_block_id: {type: mongoose.Schema.Types.ObjectId, ref: 'SentenceBlock'},
   processed_eng: {type: String, require: true},
   translated_kor: {type: String, require: true},
-  num_of_votes: {type: Number, require: true}
+  num_of_votes: {type: Number, require: true},
+  url : {type: String, require : true}
 },
 {
   timestamps: true

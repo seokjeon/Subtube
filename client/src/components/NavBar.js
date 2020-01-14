@@ -39,7 +39,12 @@ export default function MenuAppBar() {
 
   const handleClose = () => {
     setAnchorEl(null);
+
   };
+  const moveMyPage = ()=>{
+    setAnchorEl(null);
+    history.replace("/mypage")
+  }
 
   const redirectPage = ()=>{
     history.replace("/")
@@ -49,14 +54,41 @@ export default function MenuAppBar() {
       
       <AppBar position="static">
         <Toolbar>
-          
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <MenuIcon />
+          </IconButton>
           <Typography variant="h6" className={classes.title} onClick = {redirectPage}>
             SubTube
           </Typography>
-          <Typography style = {{marginRight:10}}>Subtube 관리자</Typography>
-          <Typography variant="caption">36.1H</Typography>
-
-
+         
+            <div>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={moveMyPage}>My account</MenuItem>
+              </Menu>
+            </div>
         </Toolbar>
       </AppBar>
     </div>
