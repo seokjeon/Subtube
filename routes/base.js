@@ -54,7 +54,7 @@ router.get('/api', cors(), function(req, res){
 
 router.get('/trans/:id', function (req, res) {
   videoId = req.params.id
-  url = 'http://81ccc03a.ngrok.io/Trans/' + videoId
+  url = 'http://ebebf5ff.ngrok.io/Trans/' + videoId
 
   var xhr = new XMLHttpRequest()
 
