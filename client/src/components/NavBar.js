@@ -53,7 +53,7 @@ export default function MenuAppBar() {
           <Typography variant="h6" className={classes.title} onClick = {redirectPage}>
             SubTube
           </Typography>
-          <Typography style = {{marginRight:10}}>전세옥</Typography>
+          <Typography style = {{marginRight:10}}>Subtube 관리자</Typography>
           <Typography variant="caption">36.1H</Typography>
 
 

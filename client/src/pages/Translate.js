@@ -69,7 +69,7 @@ const styles = theme => ({
 })
 
 class Translate extends Component {
-
+    
     callApi = async () => {
         let url = new URL('http://localhost:5000/api')
         url.searchParams.append('objectID',
@@ -83,7 +83,6 @@ class Translate extends Component {
         })
     
         await this.setState({ otherSub: otherSubs })
-        
     }
 
     state = {
@@ -107,8 +106,6 @@ class Translate extends Component {
                 this.setState({ otherSub: otherSubs })
             })
             .catch(err => console.error(err))
-
-        console.log(otherSubs)
 
         let subtitles = new Array
         this.fetchVideoURL(this.props.match.params.url)
@@ -173,7 +170,7 @@ class Translate extends Component {
                         <div className={classes.TransBlock}><TransBlock start={this.state.startTime} refresh_trans_list={this.callApi}/></div>
                         <div className={classes.OtherSub}>
                             <Table className={classes.root}><TableBody>
-                                <OtherSubBlock otherSub={this.state.otherSub} />
+                                <OtherSubBlock otherSub={this.state.otherSub} refresh_trans_list={this.callApi}/>
                             </TableBody>
                             </Table>
                         </div>

@@ -43,6 +43,9 @@ class TransBlock extends Component {
         })
         .then(()=>{
             this.props.refresh_trans_list()
+            for(const element of form.elements){
+                element.value = ""
+            }
         })
         
     }
@@ -52,12 +55,11 @@ class TransBlock extends Component {
             <div>
                 <form method="POST" id="frmtransblock">
                     <div>
-                        <ClearIcon className={classes.icon} style={{ color: `rgb(230, 0, 0)` }}></ClearIcon>
+                        {/* <ClearIcon className={classes.icon} style={{ color: `rgb(230, 0, 0)` }}></ClearIcon> */}
                         <CheckIcon onClick={this.handleSubmit} className={classes.icon} style={{ color: `rgb(16, 180, 80)` }}></CheckIcon>
                     </div>
                     <TextField name='RawEng' multiline variant="outlined" className={classes.text}></TextField>
                     <TextField name='TranslatedKor' multiline variant="outlined" className={classes.text}></TextField>
-                    <div className={classes.votesText}><Typography variant='caption'>추천수</Typography></div>
                     <input type='hidden' name="video_url"></input>
                     <input type='hidden' name="startTime" value={this.props.start}></input>
                 </form>
