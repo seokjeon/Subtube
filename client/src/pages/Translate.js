@@ -92,7 +92,8 @@ class Translate extends Component {
         startTime: 0,
         duration: null,
         btnIndex: null,
-        otherSub: new Array
+        otherSub: new Array,
+        timeOut : null
     }
 
     constructor(props) {
@@ -148,9 +149,12 @@ class Translate extends Component {
     }
 
     clicked = () => {
+        clearTimeout(this.state.timeOut)
+        
         this.state.yt.seekTo(this.state.startTime, true)
         this.state.yt.playVideo()
-        setTimeout(() => this.state.yt.pauseVideo(), Number(this.state.duration) * 1000 + 350)
+        const timeOut = setTimeout(() => this.state.yt.pauseVideo(), Number(this.state.duration) * 1000 + 350)
+        this.setState({timeOut : timeOut})
     }
 
     render() {
