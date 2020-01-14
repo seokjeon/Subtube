@@ -21,14 +21,6 @@ class RawItem extends Component {
   }
 
   getMaxRecommendandTrans = () => {
-    // let url = new URL('http://localhost:5000/Trans/getmax/' + String(this.props.data._id))
-    // fetch(url)
-    // .then(
-    //   response => {
-    //     console.log(response)
-    //     this.setState({transNum: !response.translationNum ? 0: !response.translationNum, maxRec: !response.maxVote ? 0 : !response.maxVote})
-    //   })
-
     const datapair = new URLSearchParams();
     datapair.append("sentence_block_id", this.props.data._id)
 
@@ -37,8 +29,9 @@ class RawItem extends Component {
       body: datapair
     })
     .then((response) => {
-      console.log(response)
-      this.setState({transNum: !response.translationNum ? 0: !response.translationNum, maxRec: !response.maxVote ? 0 : !response.maxVote})
+      return response.json()
+    }).then(result=>{
+      this.setState({transNum: !result.translationNum ? 0: result.translationNum, maxRec: !result.maxVote ? 0 : result.maxVote})
     })
   }
 
