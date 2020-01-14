@@ -28,7 +28,11 @@ function timeSort(a, b) {
   return Number(a.start_time) >= Number(b.start_time) ? 1 : -1
 }
 
+function recomSort(a, b){
+  return Number(a.num_of_votes) >= Number(b.num_of_votes) ? -1: 1
+}
 
+  
 router.post('/trans/create', function (req, res) {
   console.log(req.body)
   const video_url = req.body.video_url
@@ -50,6 +54,28 @@ router.post('/trans/create', function (req, res) {
 
   res.status(200).send("Successfully Saved!")
 })
+
+router.post('/getmax', function (req, res){
+  // console.log("getmax", req.body)
+  const objectID = req.body.sentence_block_id
+  let obj = new mongoose(objectID)
+
+  TranslationBlock.find().where("sentence_block_id").equals(obj).exec((err, result) =>{
+    if (result.length == 0){
+      res.send(JSON.stringify({translationNum: 0, maxVote: 0}))
+      return
+    }
+    sortedResult = result.sort(recomSort)
+    translationNum = result.length
+    maxVote = sortedResult[0].num_of_votes
+    returnJson = {translationNum: result.length, maxVote: sortedResult[0].num_of_votes}
+    returnValue = JSON.stringify(returnJson)
+    res.send(returnValue)
+    // res.send(JSON.stringify(returnJson))
+    // console.log("getmax: ", JSON.stringify(returnJson))
+  })
+})
+
 
 //load other people's subtitle
 router.get('/api', function (req, res) {
