@@ -29,12 +29,21 @@ class TransBlock extends Component {
 
     handleSubmit = (e) => {
         const form = document.getElementById('frmtransblock')
-       
-
         var cur_url = window.location.href
         cur_url = cur_url.slice(cur_url.lastIndexOf('/')+1)
-        console.log(form.elements.video_url.value = cur_url)
-        form.submit()
+        form.elements.video_url.value = cur_url
+        let formData = new FormData(form);
+        const datapair = new URLSearchParams();
+        for (const pair of formData) {
+            datapair.append(pair[0], pair[1]);
+        }
+        fetch("/trans/create", {
+            method: "POST",
+            body: datapair
+        })
+        .then(()=>{
+            this.props.refresh_trans_list()
+        })
         
     }
     render() {

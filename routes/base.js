@@ -20,7 +20,8 @@ function timeSort(a, b){
 }
 
   
-router.post('/trans/:id', function (req, res) {
+router.post('/trans/create', function (req, res) {
+  console.log(req.body)
   const video_url = req.body.video_url
   const processed_eng = req.body.RawEng
   const translated_kor = req.body.TranslatedKor
@@ -30,16 +31,14 @@ router.post('/trans/:id', function (req, res) {
   .where("start_time").equals(startTime)
   .exec((err, data)=>{
     TranslationBlock.create({
-      sentence_block_id: data._id,
+      sentence_block_id: data[0]._id,
       processed_eng: processed_eng,
       translated_kor: translated_kor,
       num_of_votes: 0
     })
   })
   
-  res.status(200)
-  
-  
+  res.status(200).send("Successfully Saved!")
 })
 
 //load other people's subtitle
