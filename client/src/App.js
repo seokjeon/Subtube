@@ -3,6 +3,7 @@ import {withStyles} from '@material-ui/core/styles'
 import {Home, MyPage, Translate} from './pages'
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import './App.css';
+import {CSSTransition, TransitionGroup} from 'react-transition-group'
 
 
 const styles = theme =>({
@@ -41,6 +42,7 @@ class App extends Component {
         <Route path ="/mypage" component = {MyPage}/>
         <Route exact path ="/Trans" component = {Translate}/>
       </Router>
+      
     )
     
   }

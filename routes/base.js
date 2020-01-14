@@ -43,7 +43,8 @@ router.post('/trans/create', function (req, res) {
         sentence_block_id: data[0]._id,
         processed_eng: processed_eng,
         translated_kor: translated_kor,
-        num_of_votes: 0
+        num_of_votes: 0,
+        url : video_url
       })
     })
 
@@ -56,6 +57,13 @@ router.get('/api', function (req, res) {
   let obj = new mongoose(objectID)
   TranslationBlock.find().where("sentence_block_id").equals(obj).exec((err, block) => {
     if (err) console.log("/api error : ", err)
+    res.send(JSON.stringify(block))
+  })
+})
+
+router.get('/api/video', function (req, res) {
+  TranslationBlock.find({}).sort('-num_of_votes').exec((err, block) => {
+    if (err) console.log("/api/video error : ", err)
     res.send(JSON.stringify(block))
   })
 })
