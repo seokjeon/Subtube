@@ -71,7 +71,7 @@ const styles = theme => ({
 class Translate extends Component {
     
     callApi = async () => {
-        let url = new URL('http://0.0.0.0:5000/api')
+        let url = new URL('http://localhost:5000/api')
         url.searchParams.append('objectID',
             this.state.data[this.state.btnIndex]._id)
         const response = await fetch(url)        
