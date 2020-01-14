@@ -37,11 +37,9 @@ class OtherSubBlock extends Component {
         data : new Array
     }
     delete_translation = async(index)=>{
-        let url = new URL("http://localhost:5000/trans/delete")
-        url.searchParams.append('objectID', this.props.otherSub[index]._id)
         
-        fetch(url,{
-            method:"DELETE", 
+        fetch("/trans/delete/"+this.props.otherSub[index]._id,{
+            method:"GET", 
             headers: {
                 "Access-Control-Allow-Origin": "*"
             }
@@ -56,9 +54,7 @@ class OtherSubBlock extends Component {
 
     updateVote = async (id, index)=>{
 
-        let url = new URL('http://localhost:5000/vote')
-        url.searchParams.append('objectID',id)
-        const response = await fetch(url)
+        const response = await fetch('/vote/'+id)
         const body = await response.json()
         
         const data = this.props.otherSub

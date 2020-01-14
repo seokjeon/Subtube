@@ -13,8 +13,8 @@ router.get('/', function (req, res) {
   res.send("HI CLIENT I'M NODE JS")
 })
 
-router.delete('/trans/delete', (req, res) => {
-  const objectID = req.param('objectID')
+router.get('/trans/delete/:objectID', (req, res) => {
+  const objectID = req.params.objectID
   let obj = new mongoose(objectID)
   TranslationBlock.deleteOne().where("_id").equals(obj)
   .then((err, data)=>{
@@ -78,8 +78,8 @@ router.post('/getmax', function (req, res){
 
 
 //load other people's subtitle
-router.get('/api', function (req, res) {
-  const objectID = req.param('objectID')
+router.get('/api/:objectID', function (req, res) {
+  const objectID = req.params.objectID
   let obj = new mongoose(objectID)
   TranslationBlock.find().where("sentence_block_id").equals(obj).exec((err, block) => {
     if (err) console.log("/api error : ", err)
@@ -87,15 +87,15 @@ router.get('/api', function (req, res) {
   })
 })
 
-router.get('/api/video', function (req, res) {
+router.get('/api/userid/video', function (req, res) {
   TranslationBlock.find({}).sort('-num_of_votes').exec((err, block) => {
     if (err) console.log("/api/video error : ", err)
     res.send(JSON.stringify(block))
   })
 })
 
-router.get('/vote', (req, res)=>{
-  const objectID = req.param('objectID')
+router.get('/vote/:objectID', (req, res)=>{
+  const objectID = req.params.objectID
 
   let obj = new mongoose(objectID)
   TranslationBlock.findOneAndUpdate({"_id" : obj}, { $inc : {num_of_votes : 1}}, {returnResult : true}, (err, data)=>{

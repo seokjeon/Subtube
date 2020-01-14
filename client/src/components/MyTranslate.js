@@ -21,9 +21,8 @@ class MyTranslate extends Component {
     }
 
     getVideos = async () => {
-        let url = new URL('http://localhost:5000/api/video')
 
-        const response = await fetch(url)
+        const response = await fetch("/api/userid/video")
         const body = await response.json()
         let arr = new Array
         await body.forEach(v => {
