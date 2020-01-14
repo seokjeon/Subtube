@@ -86,7 +86,6 @@ export default function MenuAppBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={moveMyPage}>Profile</MenuItem>
                 <MenuItem onClick={moveMyPage}>My account</MenuItem>
               </Menu>
             </div>
