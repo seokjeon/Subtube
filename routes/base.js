@@ -30,7 +30,7 @@ router.post('/trans/:id', function (req, res) {
   .where("start_time").equals(startTime)
   .exec((err, data)=>{
     TranslationBlock.create({
-      sentence_block_id: data._id,
+      sentence_block_id: data[0]._id,
       processed_eng: processed_eng,
       translated_kor: translated_kor,
       num_of_votes: 0
