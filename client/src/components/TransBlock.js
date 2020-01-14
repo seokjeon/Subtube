@@ -55,7 +55,7 @@ class TransBlock extends Component {
             <div>
                 <form method="POST" id="frmtransblock">
                     <div>
-                        <ClearIcon className={classes.icon} style={{ color: `rgb(230, 0, 0)` }}></ClearIcon>
+                        {/* <ClearIcon className={classes.icon} style={{ color: `rgb(230, 0, 0)` }}></ClearIcon> */}
                         <CheckIcon onClick={this.handleSubmit} className={classes.icon} style={{ color: `rgb(16, 180, 80)` }}></CheckIcon>
                     </div>
                     <TextField name='RawEng' multiline variant="outlined" className={classes.text}></TextField>

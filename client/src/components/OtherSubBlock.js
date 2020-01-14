@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ClearIcon from '@material-ui/icons/Clear'
 import { TableRow, TableCell, Typography } from '@material-ui/core'
 
 const styles = theme => ({
@@ -26,17 +27,35 @@ const styles = theme => ({
 
 class OtherSubBlock extends Component {
 
+    delete_translation = async(index)=>{
+        let url = new URL("http://localhost:5000/trans/delete")
+        url.searchParams.append('objectID', this.props.otherSub[index]._id)
+        
+        fetch(url,{
+            method:"DELETE", 
+            headers: {
+                "Access-Control-Allow-Origin": "*"
+            }
+        })
+        .then(()=>{
+            this.props.refresh_trans_list()
+        })
+        .catch(err=>console.log('delete err: ', err))
+    }
     render() {
-        let subData= this.props.otherSub
-        if(!subData)
-            return(<div></div>)
+        let subData = this.props.otherSub
+        if (!subData)
+            return (<div></div>)
         const { classes } = this.props
         return subData.map((data, index) => {
             return (
                 <div>
                     <TableRow>
                         <TableCell>
-                            <div><Typography className={classes.votesText} variant='caption'>USERID</Typography></div>
+                            <div>
+                                <Typography className={classes.votesText} variant='caption'>USERID</Typography>
+                                <ClearIcon className={classes.icon} onClick={()=>this.delete_translation(index)} style={{ color: `rgb(230, 0, 0)` }}></ClearIcon>
+                            </div>
                             <Typography className={classes.text} variant='h6'>{data.processed_eng}</Typography>
                             <Typography className={classes.text} variant='h6'>{data.translated_kor}</Typography>
                             <div className={classes.votesText}>
@@ -44,7 +63,8 @@ class OtherSubBlock extends Component {
                                     <ThumbUpIcon color="primary"></ThumbUpIcon>
                                     <Typography variant='caption'>{data.num_of_votes}</Typography>
                                 </div>
-                            </div></TableCell>
+                            </div>
+                        </TableCell>
                     </TableRow>
                 </div>
             )

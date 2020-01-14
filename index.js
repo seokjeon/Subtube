@@ -4,7 +4,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const path = require('path');
+const cors = require('cors')
 
 var db =  mongoose.connection
 db.on('error', console.error)
@@ -23,7 +23,8 @@ app.use(express.static('public'));
 // Body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
+// cors
+app.use(cors());
 
 // Node.js의 native Promise 사용
 mongoose.Promise = global.Promise;
