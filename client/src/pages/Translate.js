@@ -167,7 +167,7 @@ class Translate extends Component {
                         </div>
                     </div>
                     <div className={classes.right}>
-                        <div className={classes.TransBlock}><TransBlock start={this.state.startTime}/></div>
+                        <div className={classes.TransBlock}><TransBlock start={this.state.startTime} refresh_trans_list={this.callApi}/></div>
                         <div className={classes.OtherSub}>
                             <Table className={classes.root}><TableBody>
                                 <OtherSubBlock otherSub={this.state.otherSub} />
@@ -176,9 +176,7 @@ class Translate extends Component {
                         </div>
                     </div>
                 </div>
-
             </div>
-
         )
     }
 
