@@ -23,10 +23,7 @@ const styles = theme => ({
         minHeight: 400,
     },
     video: {
-        overflow: 'auto',
-        minHeight: '35vh',
-        marginTop: '20px',
-        display: 'inline-block'
+        width: "100%",
     },
 
     TransBlock: {
@@ -64,8 +61,6 @@ const styles = theme => ({
             display: 'none'
         }
     },
-
-
 })
 
 class Translate extends Component {
@@ -170,7 +165,7 @@ class Translate extends Component {
                         <div className={classes.TransBlock}><TransBlock start={this.state.startTime} refresh_trans_list={this.callApi}/></div>
                         <div className={classes.OtherSub}>
                             <Table className={classes.root}><TableBody>
-                                <OtherSubBlock otherSub={this.state.otherSub} refresh_trans_list={this.callApi}/>
+                            <OtherSubBlock otherSub={this.state.otherSub} refresh_trans_list={this.callApi}/>
                             </TableBody>
                             </Table>
                         </div>

@@ -25,7 +25,11 @@ const styles = theme => ({
         float: 'left',
         marginLeft: '5%',
         marginBottom: '0.3vh',
-    },
+    },tableCell: {
+        width: "100vh"
+    },tableRow: {
+        height: "10vt"
+    }
 })
 
 class OtherSubBlock extends Component {
@@ -52,7 +56,7 @@ class OtherSubBlock extends Component {
 
     updateVote = async (id, index)=>{
 
-        let url = new URL('http://0.0.0.0:5000/vote')
+        let url = new URL('http://localhost:5000/vote')
         url.searchParams.append('objectID',id)
         const response = await fetch(url)
         const body = await response.json()
@@ -72,9 +76,9 @@ class OtherSubBlock extends Component {
         const { classes } = this.props
         return subData.map((data, index) => {
             return (
-                <div>
-                    <TableRow>
-                        <TableCell>
+                <div >
+                    <TableRow className={classes.tableRow}>
+                        <TableCell className={classes.tableCell}>
                             <div>
                                 <Typography className={classes.votesText} variant='caption'>Subtube 관리자</Typography>
                                 <ClearIcon className={classes.icon} onClick={()=>this.delete_translation(index)} style={{ color: `rgb(230, 0, 0)` }}></ClearIcon>
