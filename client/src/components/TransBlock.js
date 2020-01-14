@@ -43,6 +43,9 @@ class TransBlock extends Component {
         })
         .then(()=>{
             this.props.refresh_trans_list()
+            for(const element of form.elements){
+                element.value = ""
+            }
         })
         
     }
