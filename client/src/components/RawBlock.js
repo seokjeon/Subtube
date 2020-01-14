@@ -32,7 +32,7 @@ class RawBlock extends Component {
                         <Table>
                             <TableBody>
                                 <TableRow className={classes.cell} bgcolor={this.state.selected == index ? 'lavender' : null}>
-                                <RawItem parentCallback={this.callbackFunc} row={index} data={elem}/>
+                                <RawItem parentCallback={this.callbackFunc} row={index} data={elem} />
                                 </TableRow>
 
                             </TableBody>
