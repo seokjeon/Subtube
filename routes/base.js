@@ -60,6 +60,13 @@ router.get('/api', function (req, res) {
   })
 })
 
+router.get('/api/video', function (req, res) {
+  TranslationBlock.find({}).sort('-num_of_votes').exec((err, block) => {
+    if (err) console.log("/api/video error : ", err)
+    res.send(JSON.stringify(block))
+  })
+})
+
 router.get('/vote', (req, res)=>{
   const objectID = req.param('objectID')
 
